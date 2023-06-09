@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body table-responsive">
 
-                    <form action="/admin/role" method="POST">
+                    <form action="/admin/permission" method="POST">
                     <?=csrf_field()?>
                     <?php if (session()->has('errors')): ?>
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">

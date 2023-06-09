@@ -1,6 +1,7 @@
 <?=$this->extend('layouts/main')?>
 
 <?=$this->section('content')?>
+
 <div class="row">
     <div class="col-12 mb-4 order-0">
         <div class="card">
@@ -28,4 +29,7 @@
         </div>
     </div>
 </div>
+
+<?=view_cell('App\Libraries\Message::render')?>
+
 <?=$this->endSection()?>

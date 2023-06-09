@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body table-responsive">
 
-                    <form action="/admin/role/<?=$role['id']?>" method="POST">
+                    <form action="/admin/permission/<?=$role['id']?>" method="POST">
                     <?=csrf_field()?>
                         <input type="hidden" name="_method" value="PUT">
                         <?php if (session()->has('errors')): ?>

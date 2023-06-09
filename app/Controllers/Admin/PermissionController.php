@@ -52,7 +52,7 @@ class PermissionController extends BaseController
         if ($this->validate($this->creatingRules)) {
             $permission = new Permission();
             $permission->save($_POST);
-            return view('admin/permission/index', ['message' => 'Permission created successfully']);
+            return redirect()->to('admin/permission')->withInput()->with('message', 'Permission created successfully');
         } else {
 
             return redirect()
