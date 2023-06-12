@@ -7,33 +7,6 @@ use App\Models\Role;
 
 class RoleController extends BaseController
 {
-    protected $creatingRules = [
-
-        'name' => [
-            'rules' => 'required|min_length[3]|max_length[30]|is_unique[user.name]',
-            'label' => 'Name',
-        ],
-
-        'description' => [
-            'rules' => 'required|min_length[3]|max_length[500]',
-            'label' => 'Description',
-        ],
-
-    ];
-
-    protected $editingRules = [
-
-        'name' => [
-            'rules' => 'required|min_length[3]|max_length[30]|is_unique[user.name,id,{id}]',
-            'label' => 'Name',
-        ],
-
-        'description' => [
-            'rules' => 'required|min_length[3]|max_length[500]',
-            'label' => 'Description',
-        ],
-
-    ];
 
     public function index()
     {
@@ -49,18 +22,32 @@ class RoleController extends BaseController
     {
         helper(['form']);
 
-        if ($this->validate($this->creatingRules)) {
+        $rules = [
+
+            'name' => [
+                'rules' => 'required|min_length[3]|max_length[30]|is_unique[role.name]',
+                'label' => 'Name',
+            ],
+
+            'description' => [
+                'rules' => 'required|min_length[3]|max_length[500]',
+                'label' => 'Description',
+            ],
+
+        ];
+
+        if ($this->validate($rules)) {
             $role = new Role();
             $role->save($_POST);
-            return view('admin/role/index', ['message' => 'Role created successfully']);
+            $info = ['messages' => ['Role created successfully'], 'type' => 'success'];
+            return redirect()->to('admin/role')->withInput()->with('info', $info);
         } else {
-
+            $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('errors', $this->validator->getErrors());
+                ->with('info', $info);
         }
-
     }
 
     public function show($id)
@@ -70,7 +57,6 @@ class RoleController extends BaseController
         if ($data) {
 
             return view('admin/role/show', ['role' => $data]);
-
         } else {
             return redirect()
                 ->back();
@@ -84,7 +70,6 @@ class RoleController extends BaseController
         if ($data) {
 
             return view('admin/role/edit', ['role' => $data]);
-
         } else {
             return redirect()
                 ->back();
@@ -95,17 +80,32 @@ class RoleController extends BaseController
     {
         helper(['form']);
 
-        if ($this->validate($this->editingRules)) {
+        $rules = [
+
+            'name' => [
+                'rules' => 'required|min_length[3]|max_length[30]|is_unique[role.name,id,' . $id . ']',
+                'label' => 'Name',
+            ],
+
+            'description' => [
+                'rules' => 'required|min_length[3]|max_length[500]',
+                'label' => 'Description',
+            ],
+
+        ];
+
+        if ($this->validate($rules)) {
             $role = new Role();
             $_POST['id'] = $id;
             $role->save($_POST);
-            return view('admin/role/index', ['message' => 'Role updated successfully']);
+            $info = ['messages' => ['Role updated successfully'], 'type' => 'success'];
+            return redirect()->to('admin/role')->withInput()->with('info', $info);
         } else {
-
+            $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('errors', $this->validator->getErrors());
+                ->with('info', $info);
         }
     }
 
@@ -115,10 +115,11 @@ class RoleController extends BaseController
         $data = $role->find($id);
         if ($data) {
             $role->delete($id);
+            $info = ['messages' => ['Role deleted successfully'], 'type' => 'success'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('message', 'Role deleted successfully');
+                ->with('info', $info);
         }
     }
 }

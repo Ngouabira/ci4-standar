@@ -12,6 +12,7 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive mt-3">
+                <?=view_cell('App\Libraries\Message::render')?>
                     <table class="table  table-bordered mt-2" id="attivaTable">
                         <thead>
                             <tr>

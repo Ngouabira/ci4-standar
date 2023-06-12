@@ -31,7 +31,23 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
+$routes->get('/logout', 'Auth\AuthController::logout', ['filter' => 'auth']);
+
+$routes->group('/', ['namespace' => 'App\Controllers\Auth', 'filter' => 'unauth'], function ($routes) {
+
+    $routes->get('login', 'AuthController::login');
+    $routes->get('register', 'AuthController::register');
+    $routes->get('forgotpassword', 'AuthController::forgotPassword');
+    $routes->get('resetpassword', 'AuthController::resetPassword');
+
+    $routes->post('login', 'AuthController::attemptLogin');
+    $routes->post('register', 'AuthController::attemptRegister');
+    $routes->post('forgotpassword', 'AuthController::attemptForgotPassword');
+    $routes->post('resetpassword', 'AuthController::attemptResetPassword');
+
+});
+
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'auth'], function ($routes) {
 
     $routes->get('role', 'RoleController::index');
     $routes->get('role/create', 'RoleController::create');

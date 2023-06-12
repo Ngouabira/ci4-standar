@@ -8,42 +8,36 @@ use App\Models\User;
 class UserController extends BaseController
 {
 
-    protected $creatingRules = [
-
-        'name' => [
-            'rules' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[user.name]',
-            'label' => 'Name',
-        ],
-        'email' => [
-            'rules' => 'required|valid_email|is_unique[user.email]',
-            'label' => 'Email',
-        ],
-        'password' => [
-            'rules' => 'required|strong_password',
-            'label' => 'Password',
-        ],
-
-    ];
-
-    protected $editingRules = [
-
-        'name' => [
-            'rules' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[user.name,id,{id}]',
-            'label' => 'Name',
-        ],
-        'email' => [
-            'rules' => 'required|valid_email|is_unique[user.email,id,{id}]',
-            'label' => 'Email',
-        ],
-        'password' => [
-            'rules' => 'required|strong_password',
-            'label' => 'Password',
-        ],
-
-    ];
-
     public function index()
     {
+
+        if ($this->request->isAJAX()) {
+            $model = new User();
+
+            // Get the total number of records
+            $totalRecords = $model->countAll();
+
+            // Set the limit and offset for pagination
+            $limit = $this->request->getPost('length');
+            $offset = $this->request->getPost('start');
+
+            // Get the filtered and paginated users
+            $users = $model->select('id, name, email')
+                ->orderBy('id', 'desc')
+                ->limit($limit, $offset)
+                ->findAll();
+
+            // Prepare the response data
+            $data = [
+                'draw' => $this->request->getPost('draw'),
+                'recordsTotal' => $totalRecords,
+                'recordsFiltered' => $totalRecords,
+                'data' => $users,
+            ];
+
+            return json_encode($data);
+        }
+
         return view('admin/user/index');
     }
 
@@ -55,17 +49,34 @@ class UserController extends BaseController
     public function store()
     {
         helper(['form']);
+        $rules = [
 
-        if ($this->validate($this->creatingRules)) {
+            'name' => [
+                'rules' => 'required|alpha_numeric_space|min_length[3]|max_length[30]',
+                'label' => 'Name',
+            ],
+            'email' => [
+                'rules' => 'required|valid_email|is_unique[user.email]',
+                'label' => 'Email',
+            ],
+            'password' => [
+                'rules' => 'required|min_length[8]|max_length[255]',
+                'label' => 'Password',
+            ],
+
+        ];
+        unset($_POST['role']);
+        if ($this->validate($rules)) {
             $user = new User();
             $user->save($_POST);
-            return view('admin/user/index', ['message' => 'User created successfully']);
+            $info = ['messages' => ['User created successfully'], 'type' => 'success'];
+            return redirect()->to('admin/user')->withInput()->with('info', $info);
         } else {
-
+            $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('errors', $this->validator->getErrors());
+                ->with('info', $info);
         }
 
     }
@@ -101,18 +112,30 @@ class UserController extends BaseController
     public function update($id)
     {
         helper(['form']);
+        $rules = [
 
-        if ($this->validate($this->editingRules)) {
+            'name' => [
+                'rules' => 'required|alpha_numeric_space|min_length[3]|max_length[30]',
+                'label' => 'Name',
+            ],
+            'email' => [
+                'rules' => 'required|valid_email|is_unique[user.email,id,' . $id . ']',
+                'label' => 'Email',
+            ],
+        ];
+
+        if ($this->validate($rules)) {
             $user = new User();
             $_POST['id'] = $id;
             $user->save($_POST);
-            return view('admin/user/index', ['message' => 'User updated successfully']);
+            $info = ['messages' => ['User updated successfully'], 'type' => 'success'];
+            return redirect()->to('admin/user')->withInput()->with('info', $info);
         } else {
-
+            $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('errors', $this->validator->getErrors());
+                ->with('info', $info);
         }
     }
 
@@ -122,10 +145,11 @@ class UserController extends BaseController
         $data = $user->find($id);
         if ($data) {
             $user->delete($id);
+            $info = ['messages' => ['User deleted successfully'], 'type' => 'success'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('message', 'User deleted successfully');
+                ->with('info', $info);
         }
     }
 }

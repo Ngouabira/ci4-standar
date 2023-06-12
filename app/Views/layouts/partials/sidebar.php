@@ -47,7 +47,7 @@
 
           <ul class="menu-inner py-1 ps ps--active-y">
             <!-- Dashboard -->
-            <li class="menu-item <?=!service('request')->uri->getSegment(1) ? 'active' : ''?>">
+            <li class="menu-item">
               <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -56,7 +56,7 @@
 
 
 
-            <li class="menu-item <?=service('request')->uri->getSegment(1) == 'admin' ? 'active' : ''?>">
+            <li class="menu-item <?=service('request')->uri->getSegment(1) == 'admin' ? 'active open' : ''?>">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div data-i18n="Authentications">Admin</div>

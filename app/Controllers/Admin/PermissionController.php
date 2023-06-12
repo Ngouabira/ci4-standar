@@ -7,33 +7,6 @@ use App\Models\Permission;
 
 class PermissionController extends BaseController
 {
-    protected $creatingRules = [
-
-        'name' => [
-            'rules' => 'required|min_length[3]|max_length[30]|is_unique[user.name]',
-            'label' => 'Name',
-        ],
-
-        'description' => [
-            'rules' => 'required|min_length[3]|max_length[500]',
-            'label' => 'Description',
-        ],
-
-    ];
-
-    protected $editingRules = [
-
-        'name' => [
-            'rules' => 'required|min_length[3]|max_length[30]|is_unique[user.name,id,{id}]',
-            'label' => 'Name',
-        ],
-
-        'description' => [
-            'rules' => 'required|min_length[3]|max_length[500]',
-            'label' => 'Description',
-        ],
-
-    ];
 
     public function index()
     {
@@ -48,17 +21,31 @@ class PermissionController extends BaseController
     public function store()
     {
         helper(['form']);
+        $rules = [
 
-        if ($this->validate($this->creatingRules)) {
+            'name' => [
+                'rules' => 'required|min_length[3]|max_length[30]|is_unique[role.name]',
+                'label' => 'Name',
+            ],
+
+            'description' => [
+                'rules' => 'required|min_length[3]|max_length[500]',
+                'label' => 'Description',
+            ],
+
+        ];
+
+        if ($this->validate($rules)) {
             $permission = new Permission();
             $permission->save($_POST);
-            return redirect()->to('admin/permission')->withInput()->with('message', 'Permission created successfully');
+            $info = ['messages' => ['Permission created successfully'], 'type' => 'success'];
+            return redirect()->to('admin/permission')->withInput()->with('info', $info);
         } else {
-
+            $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('errors', $this->validator->getErrors());
+                ->with('info', $info);
         }
 
     }
@@ -94,18 +81,32 @@ class PermissionController extends BaseController
     public function update($id)
     {
         helper(['form']);
+        $rules = [
 
-        if ($this->validate($this->editingRules)) {
+            'name' => [
+                'rules' => 'required|min_length[3]|max_length[30]|is_unique[permission.name,id,' . $id . ']',
+                'label' => 'Name',
+            ],
+
+            'description' => [
+                'rules' => 'required|min_length[3]|max_length[500]',
+                'label' => 'Description',
+            ],
+
+        ];
+
+        if ($this->validate($rules)) {
             $permission = new Permission();
             $_POST['id'] = $id;
             $permission->save($_POST);
-            return view('admin/permission/index', ['message' => 'Permission updated successfully']);
+            $info = ['messages' => ['Permission updated successfully'], 'type' => 'success'];
+            return redirect()->to('admin/permission')->withInput()->with('info', $info);
         } else {
-
+            $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('errors', $this->validator->getErrors());
+                ->with('info', $info);
         }
     }
 
@@ -115,10 +116,11 @@ class PermissionController extends BaseController
         $data = $permission->find($id);
         if ($data) {
             $permission->delete($id);
+            $info = ['messages' => ['Permission deleted successfully'], 'type' => 'success'];
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('message', 'Permission deleted successfully');
+                ->with('info', $info);
         }
     }
 }

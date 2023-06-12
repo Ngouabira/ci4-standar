@@ -14,14 +14,7 @@
 
                     <form action="/admin/user" method="POST">
                         <?=csrf_field()?>
-                        <?php if (session()->has('errors')): ?>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <?php foreach (session('errors') as $error): ?>
-                                    <li class="ml-40"><?=$error?></li>
-                                <?php endforeach?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        <?php endif?>
+                        <?=view_cell('App\Libraries\Message::render')?>
                         <div class="col-12 pt-1">
                             <label class="form-label" for="name">Name</label>
                             <input type="text" name="name" value="<?=old('name')?>" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>">
