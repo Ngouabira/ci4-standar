@@ -7,7 +7,7 @@
             <div class="d-flex align-items-end row">
                 <div class="card-header">
                     <div class="col-12 d-flex justify-content-between">
-                        <h5 class="card-title text-primary">New user</h5>
+                        <h5 class="card-title text-primary"><?=lang('user.new_user')?></h5>
                     </div>
                 </div>
                 <div class="card-body table-responsive">
@@ -16,23 +16,23 @@
                         <?=csrf_field()?>
                         <?=view_cell('App\Libraries\Message::render')?>
                         <div class="col-12 pt-1">
-                            <label class="form-label" for="name">Name</label>
+                            <label class="form-label" for="name"><?=lang('user.name')?></label>
                             <input type="text" name="name" value="<?=old('name')?>" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>">
                         </div>
                         <div class="col-12 pt-1">
-                            <label class="form-label" for="email">Email</label>
+                            <label class="form-label" for="email"><?=lang('user.email')?></label>
                             <input type="email" name="email" value="<?=old('email')?>" id="email" class="form-control <?=session('errors.email') ? 'is-invalid' : ''?>">
                         </div>
                         <div class="col-12 pt-1">
-                            <label class="form-label" for="role">Roles</label>
+                            <label class="form-label" for="role"><?=lang('user.roles')?></label>
                             <select name="role" id="role" class="form-control"></select>
                         </div>
                         <div class="col-12 pt-1">
-                            <label class="form-label" for="password">Password</label>
+                            <label class="form-label" for="password"><?=lang('user.password')?></label>
                             <input type="password" name="password" id="password" class="form-control <?=session('errors.password') ? 'is-invalid' : ''?>">
                         </div>
                         <div class="pt-2">
-                            <button type="submit" id="create" class="btn btn-primary">Create</button>
+                            <button type="submit" id="create" class="btn btn-primary"><?=lang('button.create')?></button>
                         </div>
                     </form>
 

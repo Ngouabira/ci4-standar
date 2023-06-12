@@ -37,6 +37,7 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="/assets/js/config.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.7.0/css/flag-icons.min.css" integrity="sha512-s/Nra58/et4CDKSnhUiPrce+8M5tdK1Ps0+9dKe4I9JH/g0QGzsPAdf1fLeBsMTMG1zWMBsnzxvPgTOAFUHwLQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -77,6 +78,9 @@
     </div>
   </div>
 
+
+
+
   <!-- Core JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -88,7 +92,6 @@
 
   <script src="/assets/vendor/js/menu.js"></script>
   <!-- endbuild -->
-
   <!-- Vendors JS -->
   <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 

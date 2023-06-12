@@ -70,7 +70,6 @@ class AuthController extends BaseController
             $model = new User();
             $user = $model->where('email', $_POST['email'])
                 ->first();
-            // var_dump($user);exit;
             if ($user && password_verify($_POST['password'], $user['password'])) {
                 $this->setSession($user);
                 return redirect()->to('/');
@@ -112,7 +111,7 @@ class AuthController extends BaseController
     {
         $data = [
             'id' => $user['id'],
-            'firstname' => $user['name'],
+            'name' => $user['name'],
             'email' => $user['email'],
             'isLoggedIn' => true,
         ];

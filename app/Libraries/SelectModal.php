@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Cells;
+namespace App\Libraries;
 
 class SelectModal
 {

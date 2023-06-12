@@ -2,10 +2,10 @@
 
 namespace App\Libraries;
 
-class ConfirmMessage
+class Datatable
 {
     public function render(): string
     {
-        return view('components/confirm_modal');
+        return view('components/datatable');
     }
 }

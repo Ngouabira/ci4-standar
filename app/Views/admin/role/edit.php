@@ -7,7 +7,7 @@
             <div class="d-flex align-items-end row">
                 <div class="card-header">
                     <div class="col-12 d-flex justify-content-between">
-                        <h5 class="card-title text-primary">Edit role</h5>
+                        <h5 class="card-title text-primary"><?=lang('role.edit_role')?></h5>
                     </div>
                 </div>
                 <div class="card-body table-responsive">
@@ -17,15 +17,15 @@
                         <input type="hidden" name="_method" value="PUT">
                         <?=view_cell('App\Libraries\Message::render')?>
                         <div class="col-12 pt-1">
-                            <label class="form-label" for="name">Name</label>
+                            <label class="form-label" for="name"><?=lang('role.name')?></label>
                             <input type="text" required name="name" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>" value="<?=$role['name']?>">
                         </div>
                         <div class="col-12 pt-1">
-                            <label class="form-label" for="description">Description</label>
+                            <label class="form-label" for="description"><?=lang('role.description')?></label>
                             <input type="text" required name="description" id="description" class="form-control <?=session('errors.description') ? 'is-invalid' : ''?>" value="<?=$role['description']?>">
                         </div>
                         <div class="pt-2">
-                            <button type="submit" id="create" class="btn btn-primary">Update</button>
+                            <button type="submit" id="create" class="btn btn-primary"><?=lang('button.update')?></button>
                         </div>
                     </form>
 

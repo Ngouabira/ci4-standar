@@ -32,6 +32,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 $routes->get('/logout', 'Auth\AuthController::logout', ['filter' => 'auth']);
+$routes->post('/translate', 'LanguageController::index', ['filter' => 'auth']);
 
 $routes->group('/', ['namespace' => 'App\Controllers\Auth', 'filter' => 'unauth'], function ($routes) {
 

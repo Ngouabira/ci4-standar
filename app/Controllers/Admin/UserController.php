@@ -18,18 +18,21 @@ class UserController extends BaseController
             $totalRecords = $model->countAll();
 
             // Set the limit and offset for pagination
-            $limit = $this->request->getPost('length');
-            $offset = $this->request->getPost('start');
+            $limit = $this->request->getGet('length');
+            $start = $this->request->getGet('start');
 
+            $search = $this->request->getGet('search[value]');
             // Get the filtered and paginated users
             $users = $model->select('id, name, email')
+                ->where('name LIKE "%' . $search . '%" OR email LIKE "%' . $search . '%"')
+                ->where('deleted_at IS NULL')
                 ->orderBy('id', 'desc')
-                ->limit($limit, $offset)
-                ->findAll();
+                ->limit($limit, $start)
+                ->get()->getResultObject();
 
             // Prepare the response data
             $data = [
-                'draw' => $this->request->getPost('draw'),
+                'draw' => $this->request->getGet('draw'),
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $totalRecords,
                 'data' => $users,
@@ -139,17 +142,21 @@ class UserController extends BaseController
         }
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $user = new User();
-        $data = $user->find($id);
-        if ($data) {
-            $user->delete($id);
+        if ($user->delete($id)) {
+            ;
             $info = ['messages' => ['User deleted successfully'], 'type' => 'success'];
             return redirect()
                 ->back()
                 ->withInput()
                 ->with('info', $info);
         }
+        $info = ['messages' => ['User not found'], 'type' => 'danger'];
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('info', $info);
     }
 }

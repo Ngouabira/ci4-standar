@@ -35,7 +35,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">Standar</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
@@ -50,7 +50,7 @@
             <li class="menu-item">
               <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
+                <div data-i18n="Analytics"><?=lang('menu.dasboard')?></div>
               </a>
             </li>
 
@@ -59,22 +59,22 @@
             <li class="menu-item <?=service('request')->uri->getSegment(1) == 'admin' ? 'active open' : ''?>">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">Admin</div>
+                <div data-i18n="Authentications"><?=lang('menu.admin')?></div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item <?=service('request')->uri->getSegment(2) == 'user' ? 'active' : ''?>">
                   <a href="/admin/user" class="menu-link">
-                    <div data-i18n="Basic">User</div>
+                    <div data-i18n="Basic"><?=lang('menu.user')?></div>
                   </a>
                 </li>
                 <li class="menu-item <?=service('request')->uri->getSegment(2) == 'role' ? 'active' : ''?>">
                   <a href="/admin/role" class="menu-link">
-                    <div data-i18n="Basic">Role</div>
+                    <div data-i18n="Basic"><?=lang('menu.role')?></div>
                   </a>
                 </li>
                 <li class="menu-item <?=service('request')->uri->getSegment(2) == 'permission' ? 'active' : ''?>">
                   <a href="/admin/permission" class="menu-link">
-                    <div data-i18n="Basic">Permission</div>
+                    <div data-i18n="Basic"><?=lang('menu.permission')?></div>
                   </a>
                 </li>
               </ul>

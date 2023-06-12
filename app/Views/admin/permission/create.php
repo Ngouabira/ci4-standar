@@ -7,7 +7,7 @@
             <div class="d-flex align-items-end row">
                 <div class="card-header">
                     <div class="col-12 d-flex justify-content-between">
-                        <h5 class="card-title text-primary">New permission</h5>
+                        <h5 class="card-title text-primary"><?=lang('permission.new_permission')?></h5>
                     </div>
                 </div>
                 <div class="card-body table-responsive">
@@ -16,15 +16,15 @@
                     <?=csrf_field()?>
                     <?=view_cell('App\Libraries\Message::render')?>
                         <div class="col-12 pt-1">
-                            <label class="form-label" for="name">Name</label>
+                            <label class="form-label" for="name"><?=lang('permission.name')?></label>
                             <input type="text"  value="<?=old('name')?>" required name="name" id="name" class="form-control <?=session('info.messages.name') ? 'is-invalid' : ''?>">
                         </div>
                         <div class="col-12 pt-1">
-                            <label class="form-label" for="description">Description</label>
+                            <label class="form-label" for="description"><?=lang('permission.description')?></label>
                             <input type="text"  value="<?=old('description')?>" required name="description" id="description" class="form-control <?=session('info.messages.description') ? 'is-invalid' : ''?>">
                         </div>
                         <div class="pt-2">
-                            <button type="submit" id="create" class="btn btn-primary">Create</button>
+                            <button type="submit" id="create" class="btn btn-primary"><?=lang('button.create')?></button>
                         </div>
                     </form>
 
