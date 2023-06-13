@@ -21,6 +21,7 @@ function showTable(tableId, columnNames, url, actionButtons=defaultActionButtons
             "autoWidth": false,
             "info": true,
             "lengthChange": true,
+             order: [[1, 'asc']],
             "language": {
                 "url":"//cdn.datatables.net/plug-ins/1.13.4/i18n/<?=(session()->get('lang') == 'it') ? 'it-IT' : ((session()->get('lang') == 'fr') ? 'fr-FR' : 'en-GB')?>.json"
             },

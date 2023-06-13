@@ -23,11 +23,13 @@ class RoleController extends BaseController
             $start = $this->request->getGet('start');
 
             $search = $this->request->getGet('search[value]');
+            $order = $this->request->getGet('order[0][column]');
+            $dir = $this->request->getGet('order[0][dir]');
             // Get the filtered and paginated users
             $users = $model->select('id, name, description')
                 ->where('name LIKE "%' . $search . '%" OR description LIKE "%' . $search . '%"')
                 ->where('deleted_at IS NULL')
-                ->orderBy('id', 'desc')
+                ->orderBy($order, $dir)
                 ->limit($limit, $start)
                 ->get()->getResultObject();
 
@@ -57,11 +59,13 @@ class RoleController extends BaseController
             $start = $this->request->getGet('start');
 
             $search = $this->request->getGet('search[value]');
+            $order = $this->request->getGet('order[0][column]');
+            $dir = $this->request->getGet('order[0][dir]');
             // Get the filtered and paginated users
             $users = $model->select('id, name, description')
                 ->where('name LIKE "%' . $search . '%" OR description LIKE "%' . $search . '%"')
                 ->where('deleted_at IS NULL')
-                ->orderBy('id', 'desc')
+                ->orderBy($order, $dir)
                 ->limit($limit, $start)
                 ->get()->getResultObject();
 
