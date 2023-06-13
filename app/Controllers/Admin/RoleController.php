@@ -3,7 +3,9 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\Permission;
 use App\Models\Role;
+use App\Models\RolePermission;
 
 class RoleController extends BaseController
 {
@@ -78,7 +80,9 @@ class RoleController extends BaseController
 
     public function create()
     {
-        return view('admin/role/create');
+        $permission = new Permission();
+        $permissions = $permission->findAll();
+        return view('admin/role/create', ['permissions' => $permissions]);
     }
 
     public function store()
@@ -99,9 +103,16 @@ class RoleController extends BaseController
 
         ];
 
+        $permissions = $_POST['permissions'];
+        unset($_POST['permissions']);
+
         if ($this->validate($rules)) {
             $role = new Role();
-            $role->save($_POST);
+            $roleId = $role->insert($_POST);
+            $rolePermission = new RolePermission();
+            foreach ($permissions as $permission) {
+                $rolePermission->save(['role_id' => $roleId, 'permission_id' => $permission]);
+            }
             $info = ['messages' => ['Role created successfully'], 'type' => 'success'];
             return redirect()->to('admin/role')->withInput()->with('info', $info);
         } else {
@@ -118,7 +129,7 @@ class RoleController extends BaseController
         $role = new Role();
         $data = $role->find($id);
         if ($data) {
-
+            $data['permissions'] = $role->getRolePermissions($id);
             return view('admin/role/show', ['role' => $data]);
         } else {
             return redirect()
@@ -130,9 +141,11 @@ class RoleController extends BaseController
     {
         $role = new Role();
         $data = $role->find($id);
+        $permission = new Permission();
+        $permissions = $permission->findAll();
         if ($data) {
-
-            return view('admin/role/edit', ['role' => $data]);
+            $data['permissions'] = $role->getRolePermissions($id);
+            return view('admin/role/edit', ['role' => $data, 'permissions' => $permissions]);
         } else {
             return redirect()
                 ->back();
@@ -157,10 +170,18 @@ class RoleController extends BaseController
 
         ];
 
+        $permissions = $_POST['permissions'];
+        unset($_POST['permissions']);
+
         if ($this->validate($rules)) {
             $role = new Role();
             $_POST['id'] = $id;
             $role->save($_POST);
+            $rolePermission = new RolePermission();
+            $role->deletePermissions($id);
+            foreach ($permissions as $permission) {
+                $rolePermission->save(['role_id' => $id, 'permission_id' => $permission]);
+            }
             $info = ['messages' => ['Role updated successfully'], 'type' => 'success'];
             return redirect()->to('admin/role')->withInput()->with('info', $info);
         } else {

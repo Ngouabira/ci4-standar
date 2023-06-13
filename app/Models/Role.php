@@ -23,10 +23,24 @@ class Role extends Model
     protected $updatedField = 'updated_at';
     protected $deletedField = 'deleted_at';
 
-    // Validation
-    // protected $validationRules = [];
-    // protected $validationMessages = [];
-    // protected $skipValidation = false;
-    // protected $cleanValidationRules = true;
+    public function getRolePermissions($roleId)
+    {
+        $permissionModel = new Permission();
+        $rolePermissionModel = new RolePermission();
+        $permissions = $rolePermissionModel
+            ->where('role_id', $roleId)
+            ->findAll();
+        $tabPermission = [];
+        foreach ($permissions as $permission) {
+            $tabPermission[] = $permissionModel->find($permission['permission_id']);
+        }
+        return $tabPermission;
+    }
+
+    public function deletePermissions($userId)
+    {
+        $rolePermissionModel = new RolePermission();
+        $rolePermissionModel->where('role_id', $userId)->delete();
+    }
 
 }
