@@ -6,6 +6,6 @@ class CustomSelect
 {
     public function render(array $params): string
     {
-        return view('components/select', ['data' => $params]);
+        return view('components/custom_select', ['data' => $params]);
     }
 }

@@ -6,6 +6,6 @@ class CustomModal
 {
     public function render(array $params): string
     {
-        return view('components/select_modal', ['data' => $params]);
+        return view('components/custom_modal', ['data' => $params]);
     }
 }

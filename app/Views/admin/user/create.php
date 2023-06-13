@@ -1,6 +1,10 @@
 <?=$this->extend('layouts/main')?>
 
 <?=$this->section('content')?>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+<script src="/assets/js/app.js"></script>
 <div class="row">
     <div class="col-12 mb-4 order-0">
         <div class="card">
@@ -49,6 +53,8 @@
                                 <?php }?>
                             </div>
                         </div>
+
+                        <?=view_cell('App\Libraries\CustomSelect::render', ['label' => 'Roles', 'name' => 'roles', 'options' => [], 'modalId' => 'rolesModal', 'route' => '/select/role/roles'])?>
                         <div class="col-12 pt-1">
                             <label class="form-label" for="password"><?=lang('user.password')?></label>
                             <input type="password" name="password" id="password" class="form-control <?=session('errors.password') ? 'is-invalid' : ''?>">
@@ -64,9 +70,7 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+<?=view_cell('App\Libraries\CustomModal::render', ['size' => 'xl', 'title' => 'Roles', 'id' => 'rolesModal'])?>
 <script>
     $('.select').select2();
 </script>
