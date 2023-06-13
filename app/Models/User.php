@@ -37,4 +37,46 @@ class User extends Model
         return $data;
     }
 
+    public function getUserRoles($userId)
+    {
+        $roleModel = new Role();
+        $userRoleModel = new UserRole();
+        $roles = $userRoleModel
+            ->where('user_id', $userId)
+            ->findAll();
+        $tabRole = [];
+        foreach ($roles as $role) {
+            $tabRole[] = $roleModel->find($role['role_id']);
+        }
+
+        return $tabRole;
+    }
+
+    public function getUserPermissions($userId)
+    {
+        $permissionModel = new Permission();
+        $userPermissionModel = new UserPermission();
+        $permissions = $userPermissionModel
+            ->where('user_id', $userId)
+            ->findAll();
+        $tabPermission = [];
+        foreach ($permissions as $permission) {
+            $tabPermission[] = $permissionModel->find($permission['permission_id']);
+        }
+
+        return $tabPermission;
+    }
+
+    public function deletePermissions($userId)
+    {
+        $userPermissionModel = new UserPermission();
+        $userPermissionModel->where('user_id', $userId)->delete();
+    }
+
+    public function deleteRoles($userId)
+    {
+        $roleModel = new UserRole();
+        $roleModel->where('user_id', $userId)->delete();
+    }
+
 }

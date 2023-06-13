@@ -3,7 +3,11 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\UserPermission;
+use App\Models\UserRole;
 
 class UserController extends BaseController
 {
@@ -46,7 +50,11 @@ class UserController extends BaseController
 
     public function create()
     {
-        return view('admin/user/create');
+        $role = new Role();
+        $roles = $role->findAll();
+        $permission = new Permission();
+        $permissions = $permission->findAll();
+        return view('admin/user/create', ['roles' => $roles, 'permissions' => $permissions]);
     }
 
     public function store()
@@ -68,10 +76,21 @@ class UserController extends BaseController
             ],
 
         ];
-        unset($_POST['role']);
+        $roles = $_POST['roles'];
+        $permissions = $_POST['permissions'];
+        unset($_POST['roles']);
+        unset($_POST['permissions']);
         if ($this->validate($rules)) {
             $user = new User();
-            $user->save($_POST);
+            $userId = $user->insert($_POST);
+            $userPermission = new UserPermission();
+            $userRole = new UserRole();
+            foreach ($roles as $role) {
+                $userRole->save(['user_id' => $userId, 'role_id' => $role]);
+            }
+            foreach ($permissions as $permission) {
+                $userPermission->save(['user_id' => $userId, 'permission_id' => $permission]);
+            }
             $info = ['messages' => ['User created successfully'], 'type' => 'success'];
             return redirect()->to('admin/user')->withInput()->with('info', $info);
         } else {
@@ -89,7 +108,8 @@ class UserController extends BaseController
         $user = new User();
         $data = $user->find($id);
         if ($data) {
-
+            $data['roles'] = $user->getUserRoles($id);
+            $data['permissions'] = $user->getUserPermissions($id);
             return view('admin/user/show', ['user' => $data]);
 
         } else {
@@ -102,9 +122,14 @@ class UserController extends BaseController
     {
         $user = new User();
         $data = $user->find($id);
+        $role = new Role();
+        $roles = $role->findAll();
+        $permission = new Permission();
+        $permissions = $permission->findAll();
         if ($data) {
-
-            return view('admin/user/edit', ['user' => $data]);
+            $data['roles'] = $user->getUserRoles($id);
+            $data['permissions'] = $user->getUserPermissions($id);
+            return view('admin/user/edit', ['user' => $data, 'roles' => $roles, 'permissions' => $permissions]);
 
         } else {
             return redirect()
@@ -127,10 +152,25 @@ class UserController extends BaseController
             ],
         ];
 
+        $roles = $_POST['roles'];
+        $permissions = $_POST['permissions'];
+        unset($_POST['roles']);
+        unset($_POST['permissions']);
+
         if ($this->validate($rules)) {
             $user = new User();
             $_POST['id'] = $id;
             $user->save($_POST);
+            $userPermission = new UserPermission();
+            $userRole = new UserRole();
+            $user->deleteRoles($id);
+            $user->deletePermissions($id);
+            foreach ($roles as $role) {
+                $userRole->save(['user_id' => $id, 'role_id' => $role]);
+            }
+            foreach ($permissions as $permission) {
+                $userPermission->save(['user_id' => $id, 'permission_id' => $permission]);
+            }
             $info = ['messages' => ['User updated successfully'], 'type' => 'success'];
             return redirect()->to('admin/user')->withInput()->with('info', $info);
         } else {
