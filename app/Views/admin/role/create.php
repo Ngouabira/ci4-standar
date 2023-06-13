@@ -1,4 +1,3 @@
-<?=$this->include('Views/load/select2')?>
 <?=$this->extend('layouts/main')?>
 
 <?=$this->section('content')?>
