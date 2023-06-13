@@ -93,7 +93,6 @@ class UserController extends BaseController
 
     public function store()
     {
-        var_dump($_POST);exit;
         helper(['form']);
         $rules = [
 

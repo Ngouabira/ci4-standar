@@ -77,7 +77,7 @@
 <?=view_cell(
     'App\Libraries\CustomModal::render',
     [
-        'size' => 'modal-lg', 'title' => 'Roles', 'modalId' => 'rolesModal',
+        'size' => 'modal-xl', 'title' => 'Roles', 'modalId' => 'rolesModal',
         'model' => 'role', 'field' => 'roles', 'columns' => ['name', 'description'],
         'route' => '/select-role',
     ]
@@ -86,7 +86,7 @@
 <?=view_cell(
     'App\Libraries\CustomModal::render',
     [
-        'size' => 'modal-lg', 'title' => 'Permissions', 'modalId' => 'permissionsModal',
+        'size' => 'modal-xl', 'title' => 'Permissions', 'modalId' => 'permissionsModal',
         'model' => 'permission', 'field' => 'permissions', 'columns' => ['name', 'description'],
         'route' => '/select-permission',
     ]
