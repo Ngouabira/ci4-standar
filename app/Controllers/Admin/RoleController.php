@@ -44,7 +44,7 @@ class RoleController extends BaseController
         return view('admin/role/index');
     }
 
-    public function select($field)
+    public function select()
     {
         if ($this->request->isAJAX()) {
             $model = new Role();
@@ -75,7 +75,6 @@ class RoleController extends BaseController
 
             return json_encode($data);
         }
-        return view('select/role', ['field' => $field]);
     }
 
     public function create()

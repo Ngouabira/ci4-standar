@@ -6,5 +6,5 @@
         <?php endif;?>
     </select>
     <input type="hidden" name="<?=$data['name']?>" id="<?=$data['name']?>_val" value="<?=$data['options'][0] ?? ''?>" />
-    <span class="btn btn-primary" id="<?=$data['name']?>" onclick="showModal('<?=$data['modalId']?>')"><i class='bx bxs-search'></i></span>
+    <span class="btn btn-primary" id="<?=$data['name']?>" onclick="showModal('<?=$data['route']?>', '<?=$data['modalId']?>')"><i class='bx bxs-search'></i></span>
 </div>

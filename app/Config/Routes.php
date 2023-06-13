@@ -76,11 +76,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
 
 });
 
-$routes->group('select', ['filter' => 'auth'], function ($routes) {
+$routes->group('', ['filter' => 'auth'], function ($routes) {
 
-    $routes->get('role/(:any)', 'Admin\RoleController::select');
-    $routes->get('permission/(:any)', 'Admin\PermissionController::select');
-    $routes->get('user/(:any)', 'Admin\UserController::select');
+    $routes->get('select-role', 'Admin\RoleController::select');
+    $routes->get('select-permission', 'Admin\PermissionController::select');
+    $routes->get('select-user', 'Admin\UserController::select');
 
 });
 

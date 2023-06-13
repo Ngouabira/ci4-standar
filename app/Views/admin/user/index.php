@@ -44,11 +44,11 @@ let columnNames = [
 
 let targets = [0, 3];
 
-let actions = function (id) {
+let actions = function (data) {
     let buttons = `
-        <a class="btn btn-info btn-sm" href="/admin/user/${id}/show"><?=lang('button.detail')?></a>
-        <a class="btn btn-primary btn-sm" href="/admin/user/${id}/edit"><?=lang('button.edit')?></a>
-        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${id})"><?=lang('button.delete')?></button>
+        <a class="btn btn-info btn-sm" href="/admin/user/${data.id}/show"><?=lang('button.detail')?></a>
+        <a class="btn btn-primary btn-sm" href="/admin/user/${data.id}/edit"><?=lang('button.edit')?></a>
+        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})"><?=lang('button.delete')?></button>
     `;
     return buttons;
 };
