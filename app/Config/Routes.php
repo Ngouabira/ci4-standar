@@ -76,6 +76,14 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
 
 });
 
+$routes->group('select', ['filter' => 'auth'], function ($routes) {
+
+    $routes->get('role', 'Admin\RoleController::select');
+    $routes->get('permission', 'Admin\PermissionController::select');
+    $routes->get('user', 'Admin\UserController::select');
+
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

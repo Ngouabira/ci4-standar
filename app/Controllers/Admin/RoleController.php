@@ -42,6 +42,40 @@ class RoleController extends BaseController
         return view('admin/role/index');
     }
 
+    public function select()
+    {
+        if ($this->request->isAJAX()) {
+            $model = new Role();
+
+            // Get the total number of records
+            $totalRecords = $model->countAll();
+
+            // Set the limit and offset for pagination
+            $limit = $this->request->getGet('length');
+            $start = $this->request->getGet('start');
+
+            $search = $this->request->getGet('search[value]');
+            // Get the filtered and paginated users
+            $users = $model->select('id, name, description')
+                ->where('name LIKE "%' . $search . '%" OR description LIKE "%' . $search . '%"')
+                ->where('deleted_at IS NULL')
+                ->orderBy('id', 'desc')
+                ->limit($limit, $start)
+                ->get()->getResultObject();
+
+            // Prepare the response data
+            $data = [
+                'draw' => $this->request->getGet('draw'),
+                'recordsTotal' => $totalRecords,
+                'recordsFiltered' => $totalRecords,
+                'data' => $users,
+            ];
+
+            return json_encode($data);
+        }
+        return view('select/role');
+    }
+
     public function create()
     {
         return view('admin/role/create');
