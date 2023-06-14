@@ -79,7 +79,7 @@
     [
         'size' => 'modal-xl', 'title' => 'Roles', 'modalId' => 'rolesModal',
         'model' => 'role', 'field' => 'roles', 'columns' => ['name', 'description'],
-        'route' => '/select-role',
+        'route' => '/admin/role',
     ]
 )?>
 
@@ -88,7 +88,7 @@
     [
         'size' => 'modal-xl', 'title' => 'Permissions', 'modalId' => 'permissionsModal',
         'model' => 'permission', 'field' => 'permissions', 'columns' => ['name', 'description'],
-        'route' => '/select-permission',
+        'route' => '/admin/permission',
     ]
 )?>
 <?=$this->endSection()?>

@@ -1,10 +1,11 @@
 <script>
 
 let defaultActionButtons = function (data) {
-    var buttons = `
-        <button class="btn btn-info btn-sm" onclick="showDetail(${data.id})">Detail</button>
-        <button class="btn btn-primary btn-sm" onclick="editUser(${data.id})">Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteUser(${data.id})">Delete</button>
+    let url = window.location.href;
+    let buttons = `
+        <button class="btn btn-info btn-sm" onclick="${url}/${data.id}/show">Detail</button>
+        <button class="btn btn-primary btn-sm" onclick="${url}/${data.id}/edit">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})">Delete</button>
     `;
     return buttons;
 };

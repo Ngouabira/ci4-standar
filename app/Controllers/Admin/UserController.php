@@ -50,42 +50,6 @@ class UserController extends BaseController
         return view('admin/user/index');
     }
 
-    public function select()
-    {
-
-        if ($this->request->isAJAX()) {
-            $model = new User();
-
-            // Get the total number of records
-            $totalRecords = $model->countAll();
-
-            // Set the limit and offset for pagination
-            $limit = $this->request->getGet('length');
-            $start = $this->request->getGet('start');
-
-            $search = $this->request->getGet('search[value]');
-            $order = $this->request->getGet('order[0][column]');
-            $dir = $this->request->getGet('order[0][dir]');
-            // Get the filtered and paginated users
-            $users = $model->select('id, name, email')
-                ->where('name LIKE "%' . $search . '%" OR email LIKE "%' . $search . '%"')
-                ->where('deleted_at IS NULL')
-                ->orderBy($order, $dir)
-                ->limit($limit, $start)
-                ->get()->getResultObject();
-
-            // Prepare the response data
-            $data = [
-                'draw' => $this->request->getGet('draw'),
-                'recordsTotal' => $totalRecords,
-                'recordsFiltered' => $totalRecords,
-                'data' => $users,
-            ];
-
-            return json_encode($data);
-        }
-    }
-
     public function create()
     {
         $role = new Role();
@@ -236,5 +200,20 @@ class UserController extends BaseController
             ->back()
             ->withInput()
             ->with('info', $info);
+    }
+
+    public function profile()
+    {
+        return view('admin/user/profile');
+    }
+
+    public function updateProfile()
+    {
+        return view('admin/user/profile');
+    }
+
+    public function updatePhoto()
+    {
+        return view('admin/user/profile');
     }
 }
