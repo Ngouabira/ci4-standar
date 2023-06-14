@@ -19,7 +19,7 @@ function showTable(tableId, columnNames, url, actionButtons=defaultActionButtons
             "serverSide": true,
             "pageLength": pageLength,
             "responsive": true,
-            "autoWidth": false,
+            "autoWidth": true,
             "info": true,
             "lengthChange": true,
              order: [[1, 'asc']],
