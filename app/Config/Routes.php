@@ -29,7 +29,7 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Home::index', ['filter' => 'auth']);
 
 $routes->get('/logout', 'Auth\AuthController::logout', ['filter' => 'auth']);
 $routes->post('/translate', 'LanguageController::index', ['filter' => 'auth']);

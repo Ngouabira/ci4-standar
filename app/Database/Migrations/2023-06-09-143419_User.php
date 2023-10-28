@@ -32,6 +32,7 @@ class User extends Migration
             'created_by' => ['type' => 'int', 'null' => true, 'default' => null],
             'updated_by' => ['type' => 'int', 'null' => true, 'default' => null],
             'deleted_by' => ['type' => 'int', 'null' => true, 'default' => null],
+            'isdeleted' => ['type' => 'int', 'null' => true, 'default' => 0],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey('email');

@@ -7,4 +7,5 @@ return [
     'update' => 'Update',
     'delete' => 'Delete',
     'detail' => 'Detail',
+    'action' => 'Action',
 ];

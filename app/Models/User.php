@@ -25,7 +25,7 @@ class User extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert = ['hashPassword', 'setCreatedBy'];
+    protected $beforeInsert = ['setCreatedBy'];
     protected $beforeUpdate = ['setUpdatedBy'];
     protected $beforeDelete = ['setDeletedBy'];
 
@@ -41,7 +41,7 @@ class User extends Model
     {
         return ['isdeleted' => 0, 'name LIKE "%' . $search . '%"
         OR description LIKE "%' . $search . '%" OR email LIKE "%' . $search . '%"
-         '];
+         ', ];
     }
 
     public function hashPassword(array $data)

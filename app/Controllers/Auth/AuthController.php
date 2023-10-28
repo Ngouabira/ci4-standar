@@ -31,6 +31,7 @@ class AuthController extends BaseController
 
         if ($this->validate($rules)) {
             $user = new User();
+            $_POST["password"] = password_hash($_POST["password"], PASSWORD_BCRYPT);
             $user->save($_POST);
             $info = ['messages' => ['Account created successfully'], 'type' => 'success'];
             return redirect()->to('/login')->withInput()->with('info', $info);

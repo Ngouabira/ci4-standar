@@ -2,6 +2,7 @@
 
 return [
 
+    'title' => 'User',
     'name' => 'Name',
     'email' => 'Email',
     'password' => 'Password',
