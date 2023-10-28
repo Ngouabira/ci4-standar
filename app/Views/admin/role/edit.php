@@ -15,7 +15,7 @@
                     <form action="/admin/role/<?=$role['id']?>" method="POST">
                         <?=csrf_field()?>
                         <input type="hidden" name="_method" value="PUT">
-                        <?=view_cell('App\Libraries\Message::render')?>
+                       <?=$this->include('Components/message.php')?>
                         <div class="col-12 pt-1">
                             <label class="form-label" for="name"><?=lang('role.name')?></label>
                             <input type="text" required name="name" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>" value="<?=$role['name']?>">

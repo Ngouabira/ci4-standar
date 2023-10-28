@@ -29,6 +29,9 @@ class User extends Migration
             'created_at' => ['type' => 'datetime', 'null' => true, 'default' => null],
             'updated_at' => ['type' => 'datetime', 'null' => true, 'default' => null],
             'deleted_at' => ['type' => 'datetime', 'null' => true, 'default' => null],
+            'created_by' => ['type' => 'int', 'null' => true, 'default' => null],
+            'updated_by' => ['type' => 'int', 'null' => true, 'default' => null],
+            'deleted_by' => ['type' => 'int', 'null' => true, 'default' => null],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey('email');

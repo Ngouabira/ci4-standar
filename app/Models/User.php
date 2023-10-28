@@ -23,13 +23,26 @@ class User extends Model
     protected $updatedField = 'updated_at';
     protected $deletedField = 'deleted_at';
 
-    // Validation
-    protected $validationRules = [];
-    protected $validationMessages = [];
-    protected $skipValidation = false;
-    protected $cleanValidationRules = true;
+    // Callbacks
+    protected $allowCallbacks = true;
+    protected $beforeInsert = ['hashPassword', 'setCreatedBy'];
+    protected $beforeUpdate = ['setUpdatedBy'];
+    protected $beforeDelete = ['setDeletedBy'];
 
-    protected $beforeInsert = ['hashPassword'];
+    const DATA_QUERY = '*';
+    const VIEW_PATH = '/admin/user';
+    const REDIRECTION_URL = '/user';
+
+    /**
+     * @param $search
+     * @return array
+     */
+    public function filter($search): array
+    {
+        return ['isdeleted' => 0, 'name LIKE "%' . $search . '%"
+        OR description LIKE "%' . $search . '%" OR email LIKE "%' . $search . '%"
+         '];
+    }
 
     public function hashPassword(array $data)
     {

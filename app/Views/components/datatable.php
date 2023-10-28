@@ -2,9 +2,9 @@
     let defaultActionButton = function(data) {
         let url = window.location.href;
         return `
-        <a class="btn btn-info btn-sm" href="${url}/${data.id}/show"><?=lang("base.App_show", [], session()->get('lang'))?></a>
-        <a class="btn btn-primary btn-sm" href="${url}/${data.id}/edit"><?=lang("base.App_edit", [], session()->get('lang'))?></a>
-        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})"><?=lang("base.App_delete", [], session()->get('lang'))?></button>
+        <a class="btn btn-info btn-sm" href="${url}/${data.id}/show"><?=translate("base.App_show", )?></a>
+        <a class="btn btn-primary btn-sm" href="${url}/${data.id}/edit"><?=translate("base.App_edit", )?></a>
+        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})"><?=translate("base.App_delete")?></button>
     `;
     };
 
@@ -12,6 +12,7 @@
         let url = window.location.href;
         return `
         <a class="btn btn-info btn-sm" href="${url}/${data.id}/show"><i class='fas fa-eye'></i></a>
+        <a class="btn btn-primary btn-sm" href="${url}/${data.id}/show"><i class='fas fa-eye'></i></a>
         <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})"><i class='fas fa-trash'></i></button>
     `;
     };
@@ -29,15 +30,12 @@
         columnNames,
         url,
         actionButtons = defaultActionButtons,
-        table,
-        key = 'tcodice',
+        key = 'id',
         pageLength = 10,
         allowAdding = false,
         allowUpdating = false,
         allowDeleting = false
     }) {
-
-        let state = await getState(table);
 
         Globalize.locale('<?=session()->get('lang')?>');
         $(`#${dataGrid}`).dxDataGrid({
@@ -53,7 +51,7 @@
             columns: [
                 ...columnNames,
                 {
-                    caption: "<?=lang('base.App_action', [], session()->get('lang'))?>",
+                    caption: "<?=translate('base.App_action')?>",
                     width: "auto",
                     allowGrouping: false,
                     allowHiding: false,
@@ -65,15 +63,6 @@
                     }
                 }
             ],
-
-            stateStoring: {
-                enabled: true,
-                type: "custom",
-                customLoad: function() {
-                    return state;
-                },
-
-            },
             allowColumnResizing: true,
             columnAutoWidth: true,
             rowAlternationEnabled: true,
@@ -95,21 +84,7 @@
                 enabled: true,
             },
             toolbar: {
-                items: [{
-                        widget: "dxButton",
-                        options: {
-                            icon: "save",
-                            // text: "Save State",
-                            onClick: function(e) {
-
-                                const gridInstance = $(`#${dataGrid}`).dxDataGrid("instance");
-                                const state = gridInstance.state();
-                                delete state.pageIndex;
-                                delete state.searchText;
-                                saveGridState(state, table);
-                            }
-                        }
-                    },
+                items: [
                     {
                         widget: "dxButton",
                         options: {
@@ -171,17 +146,6 @@
 
             sorting: {
                 mode: "single"
-            },
-            onOptionChanged: function(e) {
-
-                let match = e.fullName.match(/columns\[(\d+)\]\.sortOrder/);
-
-                if (match) {
-                    let columnIndex = parseInt(match[1]);
-                    let sortedColumn = e.component.columnOption(columnIndex, "dataField");
-                    let sortOrder = e.value;
-                    saveSession({[`${table}sortedColumn`]: sortedColumn, [`${table}sortDirection`]: sortOrder});
-                }
             }
 
         });
@@ -354,77 +318,6 @@
 
         });
     }
-
-    function getSortedColumn(dataGridOptions) {
-        const sortedColumn = dataGridOptions.columns.find((column) => column.sortIndex !== undefined);
-        const sortOrder = sortedColumn ? sortedColumn.sortOrder : 'asc';
-        return {
-            sortedColumn: sortedColumn?.name || 'id',
-            sortOrder: sortOrder
-        };
-    }
-
-
-
-    async function getState(table) {
-
-        let state = null;
-
-        await $.ajax({
-            url: "/devexpress/" + table + '/getState',
-            method: "GET",
-            success: function(response) {
-                state = response;
-                let sort = state ? getSortedColumn(state):[];
-                saveSession({[`${table}sortedColumn`]: sort?.sortedColumn ?? 'id', [`${table}sortDirection`]: sort.sortOrder ?? 'asc'});
-            },
-            error: function(error) {
-                console.error("Error saving state:", error);
-            }
-        });
-        return state;
-    }
-
-    function saveSession(data) {
-
-        return $.ajax({
-            url: '/save-sort-session',
-            method: 'POST',
-            data: data,
-            success: function(response) {
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-            }
-        });
-
-    }
-
-
-    function saveGridState(state, table) {
-
-        $.ajax({
-            url: "/devexpress",
-            method: "POST",
-            data: {
-                state: JSON.stringify(state),
-                table: table
-            },
-            success: function(response) {
-                Swal.fire({
-                    icon: response.type,
-                    position: 'top-end',
-                    title: response.message,
-                }).then((result) => {
-                    location.reload();
-                });
-            },
-            error: function(error) {
-                console.error("Error saving state:", error);
-            }
-        });
-    }
-
 
     function saveItem(data, url, method) {
 

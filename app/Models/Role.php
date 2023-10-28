@@ -23,6 +23,27 @@ class Role extends Model
     protected $updatedField = 'updated_at';
     protected $deletedField = 'deleted_at';
 
+    // Callbacks
+    protected $allowCallbacks = true;
+    protected $beforeInsert = ['setCreatedBy'];
+    protected $beforeUpdate = ['setUpdatedBy'];
+    protected $beforeDelete = ['setDeletedBy'];
+
+    const DATA_QUERY = '*';
+    const VIEW_PATH = '/admin/role';
+    const REDIRECTION_URL = '/role';
+
+    /**
+     * @param $search
+     * @return array
+     */
+    public function filter($search): array
+    {
+        return ['isdeleted' => 0, 'name LIKE "%' . $search . '%"
+        OR description LIKE "%' . $search . '%"
+         '];
+    }
+
     public function getRolePermissions($roleId)
     {
         $permissionModel = new Permission();

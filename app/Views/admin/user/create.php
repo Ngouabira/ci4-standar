@@ -1,6 +1,8 @@
 <?=$this->extend('layouts/main')?>
 
 <?=$this->section('content')?>
+<script src="/assets/js/app.js"></script>
+<?=$this->include('Components/modal.php')?>
 <div class="row">
     <div class="col-12 mb-4 order-0">
         <div class="card">
@@ -14,7 +16,7 @@
 
                     <form action="/admin/user" method="POST">
                         <?=csrf_field()?>
-                        <?=view_cell('App\Libraries\Message::render')?>
+                       <?=$this->include('Components/message.php')?>
                         <div class="col-12 pt-1">
                             <label class="form-label" for="name"><?=lang('user.name')?></label>
                             <input type="text" name="name" value="<?=old('name')?>" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>">

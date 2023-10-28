@@ -12,54 +12,64 @@ use App\Models\UserRole;
 class UserController extends BaseController
 {
 
+    private User $model;
+
+    public function __construct()
+    {
+        $this->model = new User();
+
+    }
+
     public function index()
     {
-
         if ($this->request->isAJAX()) {
-            $model = new User();
 
             // Get the total number of records
-            $totalRecords = $model->countAll();
+            $totalRecords = $this->model->countAll();
 
-            // Set the limit and offset for pagination
-            $limit = $this->request->getGet('length');
-            $start = $this->request->getGet('start');
+            // Get the pagination parameters
+            $limit = intval($this->request->getGet('$top'));
+            $start = intval($this->request->getGet('$skip'));
 
             $search = $this->request->getGet('search[value]');
-            $order = $this->request->getGet('order[0][column]');
-            $dir = $this->request->getGet('order[0][dir]');
-            // Get the filtered and paginated users
-            $users = $model->select('id, name, email')
-                ->where('name LIKE "%' . $search . '%" OR email LIKE "%' . $search . '%"')
-                ->where('deleted_at IS NULL')
+
+            // Get the sorting parameters
+            $orderby = $this->request->getGet('$orderby') ?? '';
+            $orderbyParts = explode(' ', $orderby);
+
+            // Set default sorting if not provided
+            $order = $orderbyParts[0] ? $orderbyParts[0] : 'id';
+            $dir = count($orderbyParts) > 1 ? 'desc' : ($orderbyParts[0] ? 'asc' : 'asc');
+
+            // Get the filtered roles
+            $this->model->select($this->model::DATA_QUERY)
+                ->where($this->model->filter($search))
                 ->orderBy($order, $dir)
-                ->limit($limit, $start)
-                ->get()->getResultObject();
+                ->limit($limit, $start);
+
+            $values = $this->model->get()->getResultObject();
 
             // Prepare the response data
             $data = [
-                'draw' => $this->request->getGet('draw'),
-                'recordsTotal' => $totalRecords,
-                'recordsFiltered' => $totalRecords,
-                'data' => $users,
+                'data' => $values,
+                'totalCount' => $totalRecords,
             ];
 
-            return json_encode($data);
+            return $this->response->setJSON($data);
         }
-
-        return view('admin/user/index');
+        return view($this->model::VIEW_PATH . '/index');
     }
 
-    public function create()
+    public function new ()
     {
         $role = new Role();
         $roles = $role->findAll();
         $permission = new Permission();
         $permissions = $permission->findAll();
-        return view('admin/user/create', ['roles' => $roles, 'permissions' => $permissions]);
+        return view($this->model::VIEW_PATH . '/create', ['roles' => $roles, 'permissions' => $permissions]);
     }
 
-    public function store()
+    public function create()
     {
         helper(['form']);
         $rules = [
@@ -94,7 +104,7 @@ class UserController extends BaseController
                 $userPermission->save(['user_id' => $userId, 'permission_id' => $permission]);
             }
             $info = ['messages' => ['User created successfully'], 'type' => 'success'];
-            return redirect()->to('admin/user')->withInput()->with('info', $info);
+            return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
@@ -112,7 +122,7 @@ class UserController extends BaseController
         if ($data) {
             $data['roles'] = $user->getUserRoles($id);
             $data['permissions'] = $user->getUserPermissions($id);
-            return view('admin/user/show', ['user' => $data]);
+            return view($this->model::VIEW_PATH . '/show', ['user' => $data]);
 
         } else {
             return redirect()
@@ -131,7 +141,7 @@ class UserController extends BaseController
         if ($data) {
             $data['roles'] = $user->getUserRoles($id);
             $data['permissions'] = $user->getUserPermissions($id);
-            return view('admin/user/edit', ['user' => $data, 'roles' => $roles, 'permissions' => $permissions]);
+            return view($this->model::VIEW_PATH . '/edit', ['user' => $data, 'roles' => $roles, 'permissions' => $permissions]);
 
         } else {
             return redirect()
@@ -174,7 +184,7 @@ class UserController extends BaseController
                 $userPermission->save(['user_id' => $id, 'permission_id' => $permission]);
             }
             $info = ['messages' => ['User updated successfully'], 'type' => 'success'];
-            return redirect()->to('admin/user')->withInput()->with('info', $info);
+            return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
@@ -204,16 +214,16 @@ class UserController extends BaseController
 
     public function profile()
     {
-        return view('admin/user/profile');
+        return view($this->model::VIEW_PATH . '/profile');
     }
 
     public function updateProfile()
     {
-        return view('admin/user/profile');
+        return view($this->model::VIEW_PATH . '/profile');
     }
 
     public function updatePhoto()
     {
-        return view('admin/user/profile');
+        return view($this->model::VIEW_PATH . '/profile');
     }
 }

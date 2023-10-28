@@ -50,29 +50,20 @@ $routes->group('/', ['namespace' => 'App\Controllers\Auth', 'filter' => 'unauth'
 
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'auth'], function ($routes) {
 
-    $routes->get('role', 'RoleController::index');
-    $routes->get('role/create', 'RoleController::create');
-    $routes->post('role', 'RoleController::store');
-    $routes->get('role/(:num)', 'RoleController::show/$1');
-    $routes->get('role/(:num)/edit', 'RoleController::edit/$1');
-    $routes->put('role/(:num)', 'RoleController::update/$1');
-    $routes->delete('role/(:num)', 'RoleController::delete/$1');
+    $routes->resource("user", [
+        'filter' => 'auth',
+        "controller" => "UserController",
+    ]);
 
-    $routes->get('permission', 'PermissionController::index');
-    $routes->get('permission/create', 'PermissionController::create');
-    $routes->post('permission', 'PermissionController::store');
-    $routes->get('permission/(:num)', 'PermissionController::show/$1');
-    $routes->get('permission/(:num)/edit', 'PermissionController::edit/$1');
-    $routes->put('permission/(:num)', 'PermissionController::update/$1');
-    $routes->delete('permission/(:num)', 'PermissionController::delete/$1');
+    $routes->resource("role", [
+        'filter' => 'auth',
+        "controller" => "RoleController",
+    ]);
 
-    $routes->get('user', 'UserController::index');
-    $routes->get('user/create', 'UserController::create');
-    $routes->post('user', 'UserController::store');
-    $routes->get('user/(:num)', 'UserController::show/$1');
-    $routes->get('user/(:num)/edit', 'UserController::edit/$1');
-    $routes->put('user/(:num)', 'UserController::update/$1');
-    $routes->delete('user/(:num)', 'UserController::delete/$1');
+    $routes->resource("permission", [
+        'filter' => 'auth',
+        "controller" => "PermissionController",
+    ]);
 
 });
 

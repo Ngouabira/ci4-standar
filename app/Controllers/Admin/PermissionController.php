@@ -8,48 +8,60 @@ use App\Models\Permission;
 class PermissionController extends BaseController
 {
 
+    private Permission $model;
+
+    public function __construct()
+    {
+        $this->model = new Permission();
+
+    }
+
     public function index()
     {
         if ($this->request->isAJAX()) {
-            $model = new Permission();
 
             // Get the total number of records
-            $totalRecords = $model->countAll();
+            $totalRecords = $this->model->countAll();
 
-            // Set the limit and offset for pagination
-            $limit = $this->request->getGet('length');
-            $start = $this->request->getGet('start');
+            // Get the pagination parameters
+            $limit = intval($this->request->getGet('$top'));
+            $start = intval($this->request->getGet('$skip'));
 
             $search = $this->request->getGet('search[value]');
-            $order = $this->request->getGet('order[0][column]');
-            $dir = $this->request->getGet('order[0][dir]');
-            // Get the filtered and paginated users
-            $users = $model->select('id, name, description')
-                ->where('name LIKE "%' . $search . '%" OR description LIKE "%' . $search . '%"')
-                ->where('deleted_at IS NULL')
+
+            // Get the sorting parameters
+            $orderby = $this->request->getGet('$orderby') ?? '';
+            $orderbyParts = explode(' ', $orderby);
+
+            // Set default sorting if not provided
+            $order = $orderbyParts[0] ? $orderbyParts[0] : 'id';
+            $dir = count($orderbyParts) > 1 ? 'desc' : ($orderbyParts[0] ? 'asc' : 'asc');
+
+            // Get the filtered roles
+            $this->model->select($this->model::DATA_QUERY)
+                ->where($this->model->filter($search))
                 ->orderBy($order, $dir)
-                ->limit($limit, $start)
-                ->get()->getResultObject();
+                ->limit($limit, $start);
+
+            $values = $this->model->get()->getResultObject();
 
             // Prepare the response data
             $data = [
-                'draw' => $this->request->getGet('draw'),
-                'recordsTotal' => $totalRecords,
-                'recordsFiltered' => $totalRecords,
-                'data' => $users,
+                'data' => $values,
+                'totalCount' => $totalRecords,
             ];
 
-            return json_encode($data);
+            return $this->response->setJSON($data);
         }
-        return view('admin/permission/index');
+        return view($this->model::VIEW_PATH . '/index');
+    }
+
+    public function new ()
+    {
+        return view($this->model->VIEW_PATH . '/create');
     }
 
     public function create()
-    {
-        return view('admin/permission/create');
-    }
-
-    public function store()
     {
         helper(['form']);
         $rules = [
@@ -70,7 +82,7 @@ class PermissionController extends BaseController
             $permission = new Permission();
             $permission->save($_POST);
             $info = ['messages' => ['Permission created successfully'], 'type' => 'success'];
-            return redirect()->to('admin/permission')->withInput()->with('info', $info);
+            return redirect()->to($this->model->REDICTION_URL . '')->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
@@ -87,7 +99,7 @@ class PermissionController extends BaseController
         $data = $permission->find($id);
         if ($data) {
 
-            return view('admin/permission/show', ['permission' => $data]);
+            return view($this->model->VIEW_PATH . '/show', ['permission' => $data]);
 
         } else {
             return redirect()
@@ -101,7 +113,7 @@ class PermissionController extends BaseController
         $data = $permission->find($id);
         if ($data) {
 
-            return view('admin/permission/edit', ['permission' => $data]);
+            return view($this->model->VIEW_PATH . '/edit', ['permission' => $data]);
 
         } else {
             return redirect()
@@ -131,7 +143,7 @@ class PermissionController extends BaseController
             $_POST['id'] = $id;
             $permission->save($_POST);
             $info = ['messages' => ['Permission updated successfully'], 'type' => 'success'];
-            return redirect()->to('admin/permission')->withInput()->with('info', $info);
+            return redirect()->to($this->model->REDICTION_URL . '')->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()

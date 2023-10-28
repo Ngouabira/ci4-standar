@@ -9,51 +9,62 @@ use App\Models\RolePermission;
 
 class RoleController extends BaseController
 {
+    private Role $model;
+
+    public function __construct()
+    {
+        $this->model = new Role();
+
+    }
 
     public function index()
     {
         if ($this->request->isAJAX()) {
-            $model = new Role();
 
             // Get the total number of records
-            $totalRecords = $model->countAll();
+            $totalRecords = $this->model->countAll();
 
-            // Set the limit and offset for pagination
-            $limit = $this->request->getGet('length');
-            $start = $this->request->getGet('start');
+            // Get the pagination parameters
+            $limit = intval($this->request->getGet('$top'));
+            $start = intval($this->request->getGet('$skip'));
 
             $search = $this->request->getGet('search[value]');
-            $order = $this->request->getGet('order[0][column]');
-            $dir = $this->request->getGet('order[0][dir]');
-            // Get the filtered and paginated users
-            $users = $model->select('id, name, description')
-                ->where('name LIKE "%' . $search . '%" OR description LIKE "%' . $search . '%"')
-                ->where('deleted_at IS NULL')
+
+            // Get the sorting parameters
+            $orderby = $this->request->getGet('$orderby') ?? '';
+            $orderbyParts = explode(' ', $orderby);
+
+            // Set default sorting if not provided
+            $order = $orderbyParts[0] ? $orderbyParts[0] : 'id';
+            $dir = count($orderbyParts) > 1 ? 'desc' : ($orderbyParts[0] ? 'asc' : 'asc');
+
+            // Get the filtered roles
+            $this->model->select($this->model::DATA_QUERY)
+                ->where($this->model->filter($search))
                 ->orderBy($order, $dir)
-                ->limit($limit, $start)
-                ->get()->getResultObject();
+                ->limit($limit, $start);
+
+            $values = $this->model->get()->getResultObject();
 
             // Prepare the response data
             $data = [
-                'draw' => $this->request->getGet('draw'),
-                'recordsTotal' => $totalRecords,
-                'recordsFiltered' => $totalRecords,
-                'data' => $users,
+                'data' => $values,
+                'totalCount' => $totalRecords,
             ];
 
-            return json_encode($data);
+            return $this->response->setJSON($data);
         }
-        return view('admin/role/index');
+        return view($this->model::VIEW_PATH . '/index');
     }
 
-    public function create()
+    public function new ()
     {
         $permission = new Permission();
         $permissions = $permission->findAll();
-        return view('admin/role/create', ['permissions' => $permissions]);
+        return view($this->model::VIEW_PATH . '/create', ['permissions' => $permissions]);
     }
 
-    public function store()
+    public function create()
     {
         helper(['form']);
 
@@ -82,7 +93,7 @@ class RoleController extends BaseController
                 $rolePermission->save(['role_id' => $roleId, 'permission_id' => $permission]);
             }
             $info = ['messages' => ['Role created successfully'], 'type' => 'success'];
-            return redirect()->to('admin/role')->withInput()->with('info', $info);
+            return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
@@ -98,7 +109,7 @@ class RoleController extends BaseController
         $data = $role->find($id);
         if ($data) {
             $data['permissions'] = $role->getRolePermissions($id);
-            return view('admin/role/show', ['role' => $data]);
+            return view($this->model::VIEW_PATH . '/show', ['role' => $data]);
         } else {
             return redirect()
                 ->back();
@@ -113,7 +124,7 @@ class RoleController extends BaseController
         $permissions = $permission->findAll();
         if ($data) {
             $data['permissions'] = $role->getRolePermissions($id);
-            return view('admin/role/edit', ['role' => $data, 'permissions' => $permissions]);
+            return view($this->model::VIEW_PATH . '/edit', ['role' => $data, 'permissions' => $permissions]);
         } else {
             return redirect()
                 ->back();
@@ -151,7 +162,7 @@ class RoleController extends BaseController
                 $rolePermission->save(['role_id' => $id, 'permission_id' => $permission]);
             }
             $info = ['messages' => ['Role updated successfully'], 'type' => 'success'];
-            return redirect()->to('admin/role')->withInput()->with('info', $info);
+            return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
