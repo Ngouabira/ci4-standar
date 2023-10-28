@@ -78,12 +78,12 @@
   <div class="main-container">
 		<div class="pd-ltr-20">
   <?=$this->renderSection('content')?>
+  <!-- Footer -->
+  <?=$this->include('layouts/partials/footer.php')?>
     </div>
   </div>
 
 
-  <!-- Footer -->
-  <?=$this->include('layouts/partials/footer.php')?>
 
 
 
