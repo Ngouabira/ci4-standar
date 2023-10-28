@@ -3,20 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><?=$data['title']?></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="<?=$data['modalId']?>-content">
-                <table class="table table-striped table-hover mt-2" id="tableSelect<?=$data['field']?>">
-                    <thead>
-                        <tr>
-                            <?php foreach ($data['columns'] as $column): ?>
-                                <th scope="col"><?=lang($data['model'] . '.' . $column)?></th>
-                            <?php endforeach;?>
-                            <th scope="col"><?=lang('common.action')?></th>
-                        </tr>
-                    </thead>
-                </table>
+                <div  id="tableSelect<?=$data['field']?>">
+
+                </div>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -29,7 +23,7 @@
 $columnNames = [];
 
 foreach ($data['columns'] as $column) {
-    $columnNames[] = ['data' => $column];
+    $columnNames[] = ['dataField' => $column, 'caption' => lang('base.' . $data['model'] . '_' . $column, [], session()->get('lang'))];
 }
 
 $column1 = $data['columns'][0];
@@ -39,16 +33,13 @@ $column2 = $data['columns'][1];
 <script>
     columnNames = <?php echo json_encode($columnNames); ?>;
 
-    targets = [0, 2];
-
     actions = function(data) {
-        let buttons = `
+        return `
     <button type="button" onclick="selectItem('<?=$data['field']?>',[${data['id']}, '${data['<?=$column1?>']}', '${data['<?=$column2?>']}' ], '<?=$data['modalId']?>')"
-   class="btn btn-sm btn-outline-primary"><?=lang('common.select')?></button>
+   class="btn btn-sm btn-outline-primary"><?=translate('base.App_select')?></button>
 
     `;
-        return buttons;
     };
 
-    showTable('tableSelect<?=$data['field']?>', columnNames, '<?=$data['route']?>', actions, targets);
+    showModalTable({dataGrid:'tableSelect<?=$data['field']?>', columnNames:columnNames, url:'<?=$data['route']?>',actionButtons:actions});
 </script>

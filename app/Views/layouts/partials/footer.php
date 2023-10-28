@@ -1,10 +1,4 @@
-<footer class="content-footer footer bg-footer-theme">
-              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                <div class="mb-2 mb-md-0">
-                  ©
-                 2023
-                  , made with ❤️ by
-                  <a href=https://ngouabira.github.io/valdy-ngouabira-portfolio/" target="_blank" class="footer-link fw-bolder">Valdy NGOUABIRA</a>
-                </div>
-              </div>
-            </footer>
+
+<div class="footer-wrap pd-20 mb-20 card-box">
+				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+			</div>

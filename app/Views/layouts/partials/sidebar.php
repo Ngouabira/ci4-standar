@@ -1,86 +1,200 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
-          <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
-              <span class="app-brand-logo demo">
-                <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <defs>
-                    <path d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z" id="path-1"></path>
-                    <path d="M5.47320593,6.00457225 C4.05321814,8.216144 4.36334763,10.0722806 6.40359441,11.5729822 C8.61520715,12.571656 10.0999176,13.2171421 10.8577257,13.5094407 L15.5088241,14.433041 L18.6192054,7.984237 C15.5364148,3.11535317 13.9273018,0.573395879 13.7918663,0.358365126 C13.5790555,0.511491653 10.8061687,2.3935607 5.47320593,6.00457225 Z" id="path-3"></path>
-                    <path d="M7.50063644,21.2294429 L12.3234468,23.3159332 C14.1688022,24.7579751 14.397098,26.4880487 13.008334,28.506154 C11.6195701,30.5242593 10.3099883,31.790241 9.07958868,32.3040991 C5.78142938,33.4346997 4.13234973,34 4.13234973,34 C4.13234973,34 2.75489982,33.0538207 2.37032616e-14,31.1614621 C-0.55822714,27.8186216 -0.55822714,26.0572515 -4.05231404e-15,25.8773518 C0.83734071,25.6075023 2.77988457,22.8248993 3.3049379,22.52991 C3.65497346,22.3332504 5.05353963,21.8997614 7.50063644,21.2294429 Z" id="path-4"></path>
-                    <path d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z" id="path-5"></path>
-                  </defs>
-                  <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
-                      <g id="Icon" transform="translate(27.000000, 15.000000)">
-                        <g id="Mask" transform="translate(0.000000, 8.000000)">
-                          <mask id="mask-2" fill="white">
-                            <use xlink:href="#path-1"></use>
-                          </mask>
-                          <use fill="#696cff" xlink:href="#path-1"></use>
-                          <g id="Path-3" mask="url(#mask-2)">
-                            <use fill="#696cff" xlink:href="#path-3"></use>
-                            <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
-                          </g>
-                          <g id="Path-4" mask="url(#mask-2)">
-                            <use fill="#696cff" xlink:href="#path-4"></use>
-                            <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
-                          </g>
-                        </g>
-                        <g id="Triangle" transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) ">
-                          <use fill="#696cff" xlink:href="#path-5"></use>
-                          <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
-                        </g>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-              </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Standar</span>
-            </a>
 
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
-              <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-          </div>
+<div class="left-side-bar">
+		<div class="brand-logo">
+			<a href="index.html">
+				<img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
+				<img src="vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+			</a>
+			<div class="close-sidebar" data-toggle="left-sidebar-close">
+				<i class="ion-close-round"></i>
+			</div>
+		</div>
+		<div class="menu-block customscroll mCustomScrollbar _mCS_3"><div id="mCSB_3" class="mCustomScrollBox mCS-dark-2 mCSB_vertical mCSB_inside" tabindex="0" style="max-height: none;"><div id="mCSB_3_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr">
+			<div class="sidebar-menu icon-style-1 icon-list-style-1">
+				<ul id="accordion-menu">
+					<li class="dropdown show">
+						<a href="javascript:;" class="dropdown-toggle" data-option="on">
+							<span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+						</a>
+						<ul class="submenu" style="display: block;">
+							<li><a href="index.html" class="active">Dashboard style 1</a></li>
+							<li><a href="index2.html">Dashboard style 2</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-edit2"></span><span class="mtext">Forms</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="form-basic.html">Form Basic</a></li>
+							<li><a href="advanced-components.html">Advanced Components</a></li>
+							<li><a href="form-wizard.html">Form Wizard</a></li>
+							<li><a href="html5-editor.html">HTML5 Editor</a></li>
+							<li><a href="form-pickers.html">Form Pickers</a></li>
+							<li><a href="image-cropper.html">Image Cropper</a></li>
+							<li><a href="image-dropzone.html">Image Dropzone</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-library"></span><span class="mtext">Tables</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="basic-table.html">Basic Tables</a></li>
+							<li><a href="datatable.html">DataTables</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="calendar.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-calendar1"></span><span class="mtext">Calendar</span>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-apartment"></span><span class="mtext"> UI Elements </span>
+						</a>
+						<ul class="submenu">
+							<li><a href="ui-buttons.html">Buttons</a></li>
+							<li><a href="ui-cards.html">Cards</a></li>
+							<li><a href="ui-cards-hover.html">Cards Hover</a></li>
+							<li><a href="ui-modals.html">Modals</a></li>
+							<li><a href="ui-tabs.html">Tabs</a></li>
+							<li><a href="ui-tooltip-popover.html">Tooltip &amp; Popover</a></li>
+							<li><a href="ui-sweet-alert.html">Sweet Alert</a></li>
+							<li><a href="ui-notification.html">Notification</a></li>
+							<li><a href="ui-timeline.html">Timeline</a></li>
+							<li><a href="ui-progressbar.html">Progressbar</a></li>
+							<li><a href="ui-typography.html">Typography</a></li>
+							<li><a href="ui-list-group.html">List group</a></li>
+							<li><a href="ui-range-slider.html">Range slider</a></li>
+							<li><a href="ui-carousel.html">Carousel</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-paint-brush"></span><span class="mtext">Icons</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="font-awesome.html">FontAwesome Icons</a></li>
+							<li><a href="foundation.html">Foundation Icons</a></li>
+							<li><a href="ionicons.html">Ionicons Icons</a></li>
+							<li><a href="themify.html">Themify Icons</a></li>
+							<li><a href="custom-icon.html">Custom Icons</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-analytics-21"></span><span class="mtext">Charts</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="highchart.html">Highchart</a></li>
+							<li><a href="knob-chart.html">jQuery Knob</a></li>
+							<li><a href="jvectormap.html">jvectormap</a></li>
+							<li><a href="apexcharts.html">Apexcharts</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-right-arrow1"></span><span class="mtext">Additional Pages</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="video-player.html">Video Player</a></li>
+							<li><a href="login.html">Login</a></li>
+							<li><a href="forgot-password.html">Forgot Password</a></li>
+							<li><a href="reset-password.html">Reset Password</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-browser2"></span><span class="mtext">Error Pages</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="400.html">400</a></li>
+							<li><a href="403.html">403</a></li>
+							<li><a href="404.html">404</a></li>
+							<li><a href="500.html">500</a></li>
+							<li><a href="503.html">503</a></li>
+						</ul>
+					</li>
 
-          <div class="menu-inner-shadow"></div>
-
-          <ul class="menu-inner py-1 ps ps--active-y">
-            <!-- Dashboard -->
-            <li class="menu-item">
-              <a href="/" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics"><?=lang('menu.dasboard')?></div>
-              </a>
-            </li>
-
-
-
-            <li class="menu-item <?=service('request')->uri->getSegment(1) == 'admin' ? 'active open' : ''?>">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications"><?=lang('menu.admin')?></div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item <?=service('request')->uri->getSegment(2) == 'user' ? 'active' : ''?>">
-                  <a href="/admin/user" class="menu-link">
-                    <div data-i18n="Basic"><?=lang('menu.user')?></div>
-                  </a>
-                </li>
-                <li class="menu-item <?=service('request')->uri->getSegment(2) == 'role' ? 'active' : ''?>">
-                  <a href="/admin/role" class="menu-link">
-                    <div data-i18n="Basic"><?=lang('menu.role')?></div>
-                  </a>
-                </li>
-                <li class="menu-item <?=service('request')->uri->getSegment(2) == 'permission' ? 'active' : ''?>">
-                  <a href="/admin/permission" class="menu-link">
-                    <div data-i18n="Basic"><?=lang('menu.permission')?></div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-
-
-
-          <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 407px; right: 4px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 185px;"></div></div></ul>
-        </aside>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-copy"></span><span class="mtext">Extra Pages</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="blank.html">Blank</a></li>
+							<li><a href="contact-directory.html">Contact Directory</a></li>
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="blog-detail.html">Blog Detail</a></li>
+							<li><a href="product.html">Product</a></li>
+							<li><a href="product-detail.html">Product Detail</a></li>
+							<li><a href="faq.html">FAQ</a></li>
+							<li><a href="profile.html">Profile</a></li>
+							<li><a href="gallery.html">Gallery</a></li>
+							<li><a href="pricing-table.html">Pricing Tables</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-list3"></span><span class="mtext">Multi Level Menu</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="javascript:;">Level 1</a></li>
+							<li><a href="javascript:;">Level 1</a></li>
+							<li><a href="javascript:;">Level 1</a></li>
+							<li class="dropdown">
+								<a href="javascript:;" class="dropdown-toggle" data-option="off">
+									<span class="micon fa fa-plug"></span><span class="mtext">Level 2</span>
+								</a>
+								<ul class="submenu child">
+									<li><a href="javascript:;">Level 2</a></li>
+									<li><a href="javascript:;">Level 2</a></li>
+								</ul>
+							</li>
+							<li><a href="javascript:;">Level 1</a></li>
+							<li><a href="javascript:;">Level 1</a></li>
+							<li><a href="javascript:;">Level 1</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="sitemap.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-diagram"></span><span class="mtext">Sitemap</span>
+						</a>
+					</li>
+					<li>
+						<a href="chat.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-chat3"></span><span class="mtext">Chat</span>
+						</a>
+					</li>
+					<li>
+						<a href="invoice.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-invoice"></span><span class="mtext">Invoice</span>
+						</a>
+					</li>
+					<li>
+						<div class="dropdown-divider"></div>
+					</li>
+					<li>
+						<div class="sidebar-small-cap">Extra</div>
+					</li>
+					<li>
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-edit-2"></span><span class="mtext">Documentation</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="introduction.html">Introduction</a></li>
+							<li><a href="getting-started.html">Getting Started</a></li>
+							<li><a href="color-settings.html">Color Settings</a></li>
+							<li><a href="third-party-plugins.html">Third Party Plugins</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="https://dropways.github.io/deskapp-free-single-page-website-template/" target="_blank" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-paper-plane1"></span>
+							<span class="mtext">Landing Page <img src="vendors/images/coming-soon.png" alt="" width="25" class="mCS_img_loaded"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div><div id="mCSB_3_scrollbar_vertical" class="mCSB_scrollTools mCSB_3_scrollbar mCS-dark-2 mCSB_scrollTools_vertical mCSB_scrollTools_onDrag_expand" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_3_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; display: block; height: 142px; max-height: 397px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>
+	</div>

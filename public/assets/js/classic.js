@@ -1,56 +1,184 @@
-let method = 'add';
+let link = window.location.href;
+var currentURL = link.replace(/\/new(#|$)/, "");
+let method = "add";
 let itemkey = 0;
-let theModalId;
-let thekey;
+let globalModalId;
+let globalkey;
 
-function addData(key, formId, limit) {
-    let donnees = [];
-    if (localStorage.getItem(key)) {
-        donnees = JSON.parse(localStorage.getItem(key))
+$("#btn-modal").click(function () {
+  method = "add";
+  clearField(globalkey);
+});
+
+$("#btn-close").click(function () {
+  method = "add";
+  clearField(globalkey);
+});
+
+window.onbeforeunload = function (e) {
+  localStorage.clear();
+};
+
+//Edit modal
+function showEditmodal(id, item) {
+  itemkey = id;
+  const key = item.id;
+  method = "edit";
+  const modalId = `#${globalModalId}`;
+  const modalAction = `#${key}-action`;
+  $(modalId).modal("show");
+  $(modalAction).empty();
+  const data = JSON.parse(localStorage.getItem(key));
+  data.forEach((val) => {
+    if (val.position === itemkey) {
+      $.each(val, (k, value) => {
+        if ($(`#${k}`)[0]?.tagName.toLowerCase() === "select") {
+          if (value.indexOf("|") !== -1) {
+            result = value.split("|", 2);
+            $(`#${k}`).val(result[0]);
+            const option = document.createElement("option");
+            option.value = result[0];
+            option.selected = true;
+            let part2 = result[1] ? "|" + result[1] : "";
+            option.innerHTML = `${result[0]}${part2}`;
+            let selectedIndex = $(`#${k}`)[0].selectedIndex;
+            $(`#${k}`)[0].remove(selectedIndex);
+            $(`#${k}`)[0].appendChild(option);
+          }
+        } else {
+          $(`#${k}`).val(value);
+        }
+      });
     }
-    let values = $(formId).serializeArray().reduce(function (obj, item) {
+  });
+}
+
+//Clear field
+function clearField(key) {
+  const data = JSON.parse(localStorage.getItem(key));
+  if (data) {
+    data.forEach((val) => {
+      $.each(val, (k, value) => {
+        $(`#${k}`).val("");
+      });
+    });
+  }
+}
+
+//Add row to the table
+function tableAddRow(key, columnLenght) {
+  let tableContentId = $(`#table-content-${key}`);
+  tableContentId.empty();
+  const data = JSON.parse(localStorage.getItem(key));
+  data.forEach((val) => {
+    let row = "";
+    let countV = Object.keys(val).length - 1;
+    let values = Object.values(val);
+
+    for (let i = 0; i < columnLenght; i++) {
+      if (i === 0) {
+        row += "<tr><td>" + values[i] + "</td>";
+      } else if (i === columnLenght - 1) {
+        row +=
+          "<td>" +
+          values[i] +
+          "</td><td class='d-flex justify-content-between'><a href='#' id='" +
+          key +
+          "' onclick='deleteData(" +
+          values[countV] +
+          ", this, " +
+          columnLenght +
+          ")' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a><a href='#'  id='" +
+          key +
+          "'  onclick='showEditmodal(" +
+          values[countV] +
+          ", this)'  class='btn btn-sm btn-primary'><i class='fas fa-pen'></i></a></td><tr>";
+      } else {
+        row += "<td>" + values[i] + "</td>";
+      }
+    }
+    tableContentId.append(row);
+  });
+}
+
+// Add data to the localstorage
+function addData(key, formId) {
+  let data = [];
+
+  if (localStorage.getItem(key)) {
+    data = JSON.parse(localStorage.getItem(key));
+  }
+
+  let values = $(formId)
+    .serializeArray()
+    .reduce(function (obj, item) {
+      if ($(`#${item.name}`)[0]?.tagName.toLowerCase() === "select") {
+        let selectedIndex = $(`#${item.name}`)[0].selectedIndex;
+        let selectedOption = $(`#${item.name}`)[0].options[selectedIndex];
+        if (selectedOption) {
+          obj[item.name] = selectedOption.text;
+        } else {
+          obj[item.name] = item.value;
+        }
+      } else {
         obj[item.name] = item.value;
-        return obj;
+      }
+      return obj;
     }, {});
 
-    thekey = key;
-    theModalId = "modal-"+key;
-    values.position = donnees.length + 1;
-    donnees.push(values)
-    localStorage.setItem(key, JSON.stringify(donnees));
-    $(formId)[0].reset();
+  globalkey = key;
+  globalModalId = "modal-" + key;
+  values.position = data.length + 1;
+  data.push(values);
+  localStorage.setItem(key, JSON.stringify(data));
+  $(formId)[0].reset();
 }
 
-//
-function addRowsolder(key, columnLenght) {
-    let tableContentId = $(`#table-content-${key}`);
-    tableContentId.empty();
-    const data = JSON.parse(localStorage.getItem(key));
-    data.forEach((val) => {
-        let row = '';
-        let countV = Object.keys(val).length - 1;
-        let values = Object.values(val);
-
-        for (let i = 0; i < columnLenght; i++) {
-            if (i === 0) {
-                row += '<tr><td>' + values[i] + '</td>';
-            } else if (i === columnLenght - 1) {
-                row += '<td>' + values[i] +
-                    "</td><td class='d-flex justify-content-between'><a href='#' id='" + key +
-                    "' onclick='deleteData(" + values[countV] + ", this, " + columnLenght +
-                    ")' class='btn btn-sm btn-danger'><i class='bx bx-trash'></i></a><a href='#'  id='" +
-                    key + "'  onclick='showEditmodal(" + values[countV] +
-                    ", this)'  class='btn btn-sm btn-primary'><i class='bx bx-edit'></i></a></td><tr>";
-            } else {
-                row += '<td>' + values[i] + '</td>';
-            }
-
+//Update data to the localstorage
+function updateData(key, formId) {
+  const values = $(formId)
+    .serializeArray()
+    .reduce(function (obj, item) {
+      if ($(`#${item.name}`)[0]?.tagName.toLowerCase() === "select") {
+        let selectedIndex = $(`#${item.name}`)[0].selectedIndex;
+        let selectedOption = $(`#${item.name}`)[0].options[selectedIndex];
+        if (selectedOption) {
+          obj[item.name] = selectedOption.text;
+        } else {
+          obj[item.name] = item.value;
         }
-        tableContentId.append(row);
-    });
+      } else {
+        obj[item.name] = item.value;
+      }
+      return obj;
+    }, {});
+
+  const data = JSON.parse(localStorage.getItem(key));
+
+  data.forEach((val, index) => {
+    if (val.position === parseInt(itemkey)) {
+      $.each(val, (k, v) => {
+        val[k] = values[k];
+        val.position = itemkey;
+      });
+    }
+  });
+  localStorage.setItem(key, JSON.stringify(data));
+
+  $(`#${globalModalId}`).modal("hide");
 }
 
-
+// Add or update dayta
+function saveData(key, formId, limit) {
+  if (method == "add") {
+    addData(key, formId);
+  } else {
+    updateData(key, formId);
+  }
+  clearField(key);
+  tableAddRow(key, limit);
+  console.log(method);
+}
 
 /**
  *
@@ -59,131 +187,76 @@ function addRowsolder(key, columnLenght) {
  * @param  limit
  */
 function deleteData(id, item, limit) {
-    const key = item.id;
-    let donnes = [];
-    const tableBodyId = `#table-content-${key}`;
-    const data = JSON.parse(localStorage.getItem(key));
-    data.forEach((val, index) => {
-        if (val.position !== id) {
-            donnes.push(val)
-        }
-    });
-    localStorage.setItem(key, JSON.stringify(donnes));
-    addRowsolder(key, limit)
-
-}
-
-
-//Update modal
-function showEditmodal(id, item, limit) {
-    itemkey = id;
-    const key = item.id;
-    method = 'edit';
-    const modalId = `#${theModalId}`;
-    const modalAction = `#${key}-action`;
-    $(modalId).modal('show');
-    $(modalAction).empty();
-    const data = JSON.parse(localStorage.getItem(key));
-    data.forEach((val) => {
-        if (val.position === itemkey) {
-            $.each(val, (k, value) => {
-                $(`#${k}`).val(value);
-            });
-        }
-    });
-}
-
-function updateData(key, formId, limit) {
-    const values = $(formId).serializeArray().reduce(function (obj, item) {
-        obj[item.name] = item.value;
-        return obj;
-    }, {});
-    const data = JSON.parse(localStorage.getItem(key));
-    data.forEach((val, index) => {
-        if (val.position === parseInt(itemkey)) {
-            $.each(val, (k, v) => {
-                val[k] = values[k];
-                val.position = itemkey
-            });
-        }
-    });
-    localStorage.setItem(key, JSON.stringify(data));
-
-    $(`#${theModalId}`).modal('hide');
-}
-
-function saveData(key, formId, limit) {
-
-    if (method == 'add') {
-
-        addData(key, formId, limit);
-    } else {
-        updateData(key, formId, limit);
+  const key = item.id;
+  let donnes = [];
+  const tableBodyId = `#table-content-${key}`;
+  const data = JSON.parse(localStorage.getItem(key));
+  data.forEach((val, index) => {
+    if (val.position !== id) {
+      donnes.push(val);
     }
-    clearField(key);
-    addRowsolder(key, limit);
+  });
+  localStorage.setItem(key, JSON.stringify(donnes));
+  tableAddRow(key, limit);
 }
 
-$('#btn-modal').click(function () {
+function formatLocalStorageData(data) {
+  let result = [];
 
-    method = 'add';
-})
-
-$('#btn-close').click(function () {
-
-    clearField(thekey);
-})
-
-window.onbeforeunload = function (e) {
-    localStorage.clear();
-};
-
-function clearField(key){
-
-    const data = JSON.parse(localStorage.getItem(key));
+  if (data != null) {
     data.forEach((val) => {
-            $.each(val, (k, value) => {
-                $(`#${k}`).val("");
-            });
+      let tab = {};
+      $.each(val, (k, value) => {
+        if ($(`#${k}`)[0]?.tagName.toLowerCase() === "select") {
+          if (value.indexOf("|") !== -1) {
+            array = value.split("|", 2);
+            tab[k] = array[0];
+          }
+        } else {
+          tab[k] = value;
+        }
+      });
+      result.push(tab);
     });
+  }
 
+  return result;
 }
 
-let tabsContent = $('#tabsContent');
+// Form submit
+let tabsContent = $("#tabsContent");
 
-tabsContent.on('submit', function(e) {
-    e.preventDefault();
-    const values = tabsContent.serializeArray().reduce(function(obj, item) {
-        obj[item.name] = item.value;
-        return obj;
-    }, {});
-    values[thekey] = JSON.parse(localStorage.getItem(thekey));
+tabsContent.on("submit", function (e) {
+  e.preventDefault();
 
-    $.ajax({
-        url: `/${thekey}`,
-        type: "POST",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-            "data": values
-
-        },
-        success: function(response) {
-            $("#tabsContent")[0].reset();
-            localStorage.removeItem(thekey);
-            Swal.fire({
-                icon: 'success',
-                position: 'top-end',
-                title: response.message,
-                showConfirmButton: false,
-                timer: 1500
-            }).then((result) => {
-                window.location = `/${thekey}`
-            });
-        },
-        error: function(response) {
-            console.log(response)
-        }
-    });
+  $("#form-btn").attr("disabled", true);
+  const values = tabsContent.serializeArray().reduce(function (obj, item) {
+    obj[item.name] = item.value;
+    return obj;
+  }, {});
+  values[globalkey] = formatLocalStorageData(
+    JSON.parse(localStorage.getItem(globalkey))
+  );
+  $.ajax({
+    url: `${currentURL}`,
+    method: "POST",
+    data: values,
+    success: function (response) {
+      console.table(response);
+      $("#tabsContent")[0].reset();
+      localStorage.removeItem(globalkey);
+      Swal.fire({
+        icon: response.type,
+        position: "top-end",
+        title: response.message,
+      }).then((result) => {
+        window.location = `${currentURL}`;
+      });
+      $("#form-btn").attr("disabled", false);
+    },
+    error: function (xhr, status, error) {
+      console.log(error);
+      $("#form-btn").attr("disabled", false);
+    },
+  });
 });

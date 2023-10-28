@@ -2,119 +2,104 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <!-- Basic Page Info -->
+  <meta charset="utf-8">
+  <title>Authentification</title>
 
-  <title>Standar Project</title>
+  <!-- Site favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/vendors/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/vendors/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/vendors/images/favicon-16x16.png">
 
-  <meta name="description" content="" />
+  <!-- Mobile Specific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="assets/vendors/styles/core.css">
+  <link rel="stylesheet" type="text/css" href="assets/vendors/styles/icon-font.min.css">
+  <link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/vendors/styles/style.css">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119386393-1');
+  </script>
+
   <?=$this->renderSection('css')?>
   <!-- Icons. Uncomment required icon fonts -->
-  <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
-  <!-- Core CSS -->
-  <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-  <link rel="stylesheet" href="/assets/css/demo.css" />
+  <!-- DevExtreme theme -->
+  <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/23.1.3/css/dx.light.css">
 
-  <!-- Vendors CSS -->
-  <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-  <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
-
-  <!-- Page CSS -->
-
-  <!-- Helpers -->
-  <script src="/assets/vendor/js/helpers.js"></script>
-
-  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  <script src="/assets/js/config.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.7.0/css/flag-icons.min.css" integrity="sha512-s/Nra58/et4CDKSnhUiPrce+8M5tdK1Ps0+9dKe4I9JH/g0QGzsPAdf1fLeBsMTMG1zWMBsnzxvPgTOAFUHwLQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!--  -->
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css" />
-
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js" referrerpolicy="no-referrer"></script>
-
-<script src="/assets/js/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cldrjs/0.5.0/cldr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cldrjs/0.5.0/cldr/event.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cldrjs/0.5.0/cldr/supplemental.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.3.0/globalize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.3.0/globalize/message.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.3.0/globalize/number.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.3.0/globalize/currency.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.3.0/globalize/date.min.js"></script>
+  <!-- DevExtreme library -->
+  <script src="https://cdn3.devexpress.com/jslib/23.1.3/js/dx.all.js"></script>
+  <!-- Dictionary files for German language -->
+  <script src="https://cdn3.devexpress.com/jslib/23.1.3/js/localization/dx.messages.fr.js"></script>
+  <script src="https://cdn3.devexpress.com/jslib/23.1.3/js/localization/dx.messages.it.js"></script>
+  <!-- Common and language-specific CLDR data -->
+  <!-- <script src="https://unpkg.com/devextreme-cldr-data/supplemental.js"></script> -->
+  <!-- <script src="https://unpkg.com/devextreme-cldr-data/fr.js"></script> -->
+  <script src="/assets/js/app.js"></script>
 
 </head>
 
 <body>
 
 
-  <!-- Layout wrapper -->
-  <div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
+  <!-- Header -->
+  <?=$this->include('layouts/partials/header.php')?>
 
-      <!-- Sidebar -->
-      <?=$this->include('layouts/partials/sidebar.php')?>
+  <!-- Sidebar -->
+  <?=$this->include('layouts/partials/sidebar.php')?>
 
-      <!-- Layout container -->
-      <div class="layout-page">
+  <!-- Layout container -->
 
 
-        <!-- Navbar -->
-        <?=$this->include('layouts/partials/navbar.php')?>
-
-        <!-- Content wrapper -->
-        <div class="content-wrapper">
-
-          <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Content -->
-            <?=$this->renderSection('content')?>
-          </div>
-
-          <!-- Footer -->
-          <?=$this->include('layouts/partials/footer.php')?>
-
-        </div>
-
-
-      </div>
-
-
-
+  <!-- Content -->
+  <div class="main-container">
+		<div class="pd-ltr-20">
+  <?=$this->renderSection('content')?>
     </div>
   </div>
 
 
+  <!-- Footer -->
+  <?=$this->include('layouts/partials/footer.php')?>
 
-  <!-- Core JS -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <!-- build:js /assets/vendor/js/core.js -->
-  <script src="/assets/vendor/libs/jquery/jquery.js"></script>
-  <script src="/assets/vendor/libs/popper/popper.js"></script>
-  <script src="/assets/vendor/js/bootstrap.js"></script>
-  <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-  <script src="/assets/vendor/js/menu.js"></script>
-  <!-- endbuild -->
-  <!-- Vendors JS -->
-  <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
-  <!-- Main JS -->
-  <script src="/assets/js/main.js"></script>
 
-  <!-- Page JS -->
-  <script src="/assets/js/dashboards-analytics.js"></script>
 
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- js -->
+  <script src="assets/vendors/scripts/core.js"></script>
+  <script src="assets/vendors/scripts/script.min.js"></script>
+  <script src="assets/vendors/scripts/process.js"></script>
+  <script src="assets/vendors/scripts/layout-settings.js"></script>
+  <script src="assets/src/plugins/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+  <script src="assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+  <script src="assets/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+  <script src="assets/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+  <script src="assets/vendors/scripts/dashboard.js"></script>
   <?=$this->renderSection('js')?>
 </body>
 
