@@ -12,10 +12,10 @@
                 </div>
                 <div class="card-body table-responsive">
 
-                    <form action="admin/user/<?=$user['id']?>" method="POST">
+                    <form action="/admin/user/<?=$user['id']?>" method="POST">
                         <?=csrf_field()?>
                         <input type="hidden" name="_method" value="PUT">
-                       <?=$this->include('Components/message.php')?>
+                       <?=$this->include('components/message.php')?>
                         <div class="col-12 pt-1">
                             <label class="form-label" for="name"><?=lang('user.name')?></label>
                             <input type="text" name="name" required id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>" value="<?=$user['name']?>">
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="pt-2">
-                            <button type="button" id="create" class="btn btn-primary"><?=lang('button.update')?></button>
+                            <button type="submit" id="create" class="btn btn-primary"><?=lang('button.update')?></button>
                         </div>
                     </form>
 

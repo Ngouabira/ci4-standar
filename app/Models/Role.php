@@ -31,7 +31,7 @@ class Role extends Model
 
     const DATA_QUERY = '*';
     const VIEW_PATH = '/admin/role';
-    const REDIRECTION_URL = '/role';
+    const REDIRECTION_URL = '/admin/role';
 
     /**
      * @param $search
@@ -41,7 +41,7 @@ class Role extends Model
     {
         return ['isdeleted' => 0, 'name LIKE "%' . $search . '%"
         OR description LIKE "%' . $search . '%"
-         '];
+         ', ];
     }
 
     public function getRolePermissions($roleId)

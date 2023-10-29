@@ -31,7 +31,7 @@ class Permission extends Model
 
     const DATA_QUERY = '*';
     const VIEW_PATH = '/admin/permission';
-    const REDIRECTION_URL = '/permission';
+    const REDIRECTION_URL = '/admin/permission';
 
     /**
      * @param $search
@@ -41,7 +41,7 @@ class Permission extends Model
     {
         return ['isdeleted' => 0, 'name LIKE "%' . $search . '%"
         OR description LIKE "%' . $search . '%"
-         ', ];
+         '];
     }
 
 }

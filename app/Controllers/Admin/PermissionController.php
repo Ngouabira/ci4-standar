@@ -58,7 +58,7 @@ class PermissionController extends BaseController
 
     public function new ()
     {
-        return view($this->model->VIEW_PATH . '/create');
+        return view($this->model::VIEW_PATH . '/create');
     }
 
     public function create()
@@ -82,7 +82,7 @@ class PermissionController extends BaseController
             $permission = new Permission();
             $permission->save($_POST);
             $info = ['messages' => ['Permission created successfully'], 'type' => 'success'];
-            return redirect()->to($this->model->REDICTION_URL . '')->withInput()->with('info', $info);
+            return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()
@@ -99,7 +99,7 @@ class PermissionController extends BaseController
         $data = $permission->find($id);
         if ($data) {
 
-            return view($this->model->VIEW_PATH . '/show', ['permission' => $data]);
+            return view($this->model::VIEW_PATH . '/show', ['permission' => $data]);
 
         } else {
             return redirect()
@@ -113,7 +113,7 @@ class PermissionController extends BaseController
         $data = $permission->find($id);
         if ($data) {
 
-            return view($this->model->VIEW_PATH . '/edit', ['permission' => $data]);
+            return view($this->model::VIEW_PATH . '/edit', ['permission' => $data]);
 
         } else {
             return redirect()
@@ -143,7 +143,7 @@ class PermissionController extends BaseController
             $_POST['id'] = $id;
             $permission->save($_POST);
             $info = ['messages' => ['Permission updated successfully'], 'type' => 'success'];
-            return redirect()->to($this->model->REDICTION_URL . '')->withInput()->with('info', $info);
+            return redirect()->to($this->model::REDIRECTION_URL . '')->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
             return redirect()

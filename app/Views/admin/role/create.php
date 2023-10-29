@@ -11,10 +11,9 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive">
-
                     <form action="/admin/role" method="POST">
                         <?=csrf_field()?>
-                       <?=$this->include('Components/message.php')?>
+                       <?=$this->include('components/message.php')?>
                         <div class="col-12 pt-1">
                             <label class="form-label" for="name"><?=lang('role.name')?></label>
                             <input type="text" value="<?=old('name')?>" required name="name" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>">
@@ -37,7 +36,7 @@
                             </div>
                         </div>
                         <div class="pt-2">
-                            <button type="submit" id="create" class="btn btn-primary"><?=lang('button.create')?></button>
+                            <button type="submit" id="create" class="btn btn-primary"><?=lang('base.create')?></button>
                         </div>
                     </form>
 

@@ -31,7 +31,7 @@ class User extends Model
 
     const DATA_QUERY = '*';
     const VIEW_PATH = '/admin/user';
-    const REDIRECTION_URL = '/user';
+    const REDIRECTION_URL = '/admin/user';
 
     /**
      * @param $search

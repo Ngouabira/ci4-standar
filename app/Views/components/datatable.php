@@ -11,9 +11,9 @@
     let defaultActionButtons = function(data) {
         let url = window.location.href;
         return `
-        <a class="btn btn-info btn-sm" href="${url}/${data.id}/show"><i class='fas fa-eye'></i></a>
-        <a class="btn btn-primary btn-sm" href="${url}/${data.id}/show"><i class='fas fa-eye'></i></a>
-        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})"><i class='fas fa-trash'></i></button>
+        <a class="btn btn-info btn-sm" href="${url}/${data.id}/show"><i class="icon-copy fi-eye"></i></a>
+        <a class="btn btn-primary btn-sm" href="${url}/${data.id}/edit"><i class="icon-copy fi-pencil"></i></a>
+        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})"><i class="icon-copy fi-trash"></i></button>
     `;
     };
 
@@ -51,7 +51,7 @@
             columns: [
                 ...columnNames,
                 {
-                    caption: "<?=translate('base.App_action')?>",
+                    caption: "<?=translate('base.action')?>",
                     width: "auto",
                     allowGrouping: false,
                     allowHiding: false,
@@ -108,7 +108,7 @@
                 totalItems: [{
                     column: key,
                     summaryType: "count",
-                    displayFormat: "<?=translate('base.App_total')?>: {0}"
+                    displayFormat: "<?=translate('base.total')?>: {0}"
                 }]
             },
             showColumnTotals: true,
@@ -206,7 +206,7 @@
                 totalItems: [{
                     column: "id",
                     summaryType: "count",
-                    displayFormat: "<?=translate('base.App_total')?>: {0}"
+                    displayFormat: "<?=translate('base.total')?>: {0}"
                 }]
             },
             sortByGroupSummaryInfo: [{

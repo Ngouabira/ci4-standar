@@ -63,7 +63,7 @@
             </div>
             <form action="/forgotpassword" method="POST">
               <?=csrf_field()?>
-              <?=$this->include('Components/message.php')?>
+              <?=$this->include('components/message.php')?>
               <div class="input-group custom">
                 <input type="email" name="email" class="form-control form-control-lg" placeholder="Email">
                 <div class="input-group-append custom">
