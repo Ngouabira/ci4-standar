@@ -4,7 +4,7 @@
 <head>
   <!-- Basic Page Info -->
   <meta charset="utf-8">
-  <title>Forgot password</title>
+  <title><?=translate('auth.forgotPassword')?></title>
 
   <!-- Site favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="assets/vendors/images/apple-touch-icon.png">
@@ -39,13 +39,13 @@
   <div class="login-header box-shadow">
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <div class="brand-logo">
-        <a href="login.html">
+        <a href="/login">
           <img src="assets/vendors/images/deskapp-logo.svg" alt="">
         </a>
       </div>
       <div class="login-menu">
         <ul>
-          <li><a href="/login">Login</a></li>
+          <li><a href="/login"><?=translate('base.login')?></a></li>
         </ul>
       </div>
     </div>
@@ -59,13 +59,13 @@
         <div class="col-md-6 col-lg-5">
           <div class="login-box bg-white box-shadow border-radius-10">
             <div class="login-title">
-              <h2 class="text-center text-primary">Forgot Password? 🔒</h2>
+              <h2 class="text-center text-primary"><?=translate('auth.forgotPassword')?> 🔒</h2>
             </div>
             <form action="/forgotpassword" method="POST">
               <?=csrf_field()?>
               <?=$this->include('components/message.php')?>
               <div class="input-group custom">
-                <input type="email" name="email" class="form-control form-control-lg" placeholder="Email">
+                <input type="email" name="email" class="form-control form-control-lg" placeholder="<?=translate('auth.email')?>">
                 <div class="input-group-append custom">
                   <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                 </div>
@@ -73,9 +73,9 @@
               <div class="row">
                 <div class="col-sm-12">
                   <div class="input-group mb-0">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">end Reset Link</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit"><?=translate('auth.sendInstructions')?></button>
                   </div>
-                  <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373"> <a class="btn btn-outline-primary btn-lg btn-block" href="/login">Back to login</a></div>
+                  <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373"> <a class="btn btn-outline-primary btn-lg btn-block" href="/login"><?=translate('base.back_to_login')?></a></div>
                 </div>
               </div>
             </form>

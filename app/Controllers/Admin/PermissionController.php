@@ -68,12 +68,12 @@ class PermissionController extends BaseController
 
             'name' => [
                 'rules' => 'required|min_length[3]|max_length[30]|is_unique[role.name]',
-                'label' => 'Name',
+                'label' => translate('permission.name'),
             ],
 
             'description' => [
                 'rules' => 'required|min_length[3]|max_length[500]',
-                'label' => 'Description',
+                'label' => translate('permission.description'),
             ],
 
         ];
@@ -81,7 +81,7 @@ class PermissionController extends BaseController
         if ($this->validate($rules)) {
             $permission = new Permission();
             $permission->save($_POST);
-            $info = ['messages' => ['Permission created successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.insert-success')], 'type' => 'success'];
             return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
@@ -128,12 +128,12 @@ class PermissionController extends BaseController
 
             'name' => [
                 'rules' => 'required|min_length[3]|max_length[30]|is_unique[permission.name,id,' . $id . ']',
-                'label' => 'Name',
+                'label' => translate('permission.name'),
             ],
 
             'description' => [
                 'rules' => 'required|min_length[3]|max_length[500]',
-                'label' => 'Description',
+                'label' => translate('permission.description'),
             ],
 
         ];
@@ -142,7 +142,7 @@ class PermissionController extends BaseController
             $permission = new Permission();
             $_POST['id'] = $id;
             $permission->save($_POST);
-            $info = ['messages' => ['Permission updated successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.update-success')], 'type' => 'success'];
             return redirect()->to($this->model::REDIRECTION_URL . '')->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
@@ -158,14 +158,14 @@ class PermissionController extends BaseController
         $permission = new Permission();
 
         if ($permission->delete($id)) {
-            $info = ['messages' => ['Permission deleted successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.delete-success')], 'type' => 'success'];
             return redirect()
                 ->back()
                 ->withInput()
                 ->with('info', $info);
         }
 
-        $info = ['messages' => ['Permission not found'], 'type' => 'danger'];
+        $info = ['messages' => [translate('base.not-found')], 'type' => 'danger'];
         return redirect()
             ->back()
             ->withInput()

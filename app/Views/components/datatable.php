@@ -1,19 +1,19 @@
 <script>
-    let defaultActionButton = function(data) {
-        let url = window.location.href;
-        return `
-        <a class="btn btn-info btn-sm" href="${url}/${data.id}/show"><?=translate("base.App_show", )?></a>
-        <a class="btn btn-primary btn-sm" href="${url}/${data.id}/edit"><?=translate("base.App_edit", )?></a>
-        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})"><?=translate("base.App_delete")?></button>
-    `;
-    };
 
     let defaultActionButtons = function(data) {
         let url = window.location.href;
         return `
+        <a class="btn btn-outline-info btn-sm" href="${url}/${data.id}/show"><i class="icon-copy fi-eye"></i></a>
+        <a class="btn btn-outline-primary btn-sm" href="${url}/${data.id}/edit"><i class="icon-copy fi-pencil"></i></a>
+        <button class="btn btn-outline-danger btn-sm" onclick="showDeleteModal(${data.id})"><i class="icon-copy fi-trash"></i></button>
+    `;
+    };
+
+    let defaultActionButtons2 = function(data) {
+        let url = window.location.href;
+        return `
         <a class="btn btn-info btn-sm" href="${url}/${data.id}/show"><i class="icon-copy fi-eye"></i></a>
         <a class="btn btn-primary btn-sm" href="${url}/${data.id}/edit"><i class="icon-copy fi-pencil"></i></a>
-        <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${data.id})"><i class="icon-copy fi-trash"></i></button>
     `;
     };
 

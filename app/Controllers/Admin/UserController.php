@@ -76,20 +76,20 @@ class UserController extends BaseController
 
             'name' => [
                 'rules' => 'required|alpha_numeric_space|min_length[3]|max_length[30]',
-                'label' => 'Name',
+                'label' => translate('user.name'),
             ],
             'email' => [
                 'rules' => 'required|valid_email|is_unique[user.email]',
-                'label' => 'Email',
+                'label' => translate('user.email'),
             ],
             'password' => [
                 'rules' => 'required|min_length[8]|max_length[255]',
-                'label' => 'Password',
+                'label' => translate('user.password'),
             ],
 
         ];
-        $roles = $_POST['roles'];
-        $permissions = $_POST['permissions'];
+        $roles = $_POST['roles'] ?? [];
+        $permissions = $_POST['permissions'] ?? [];
         unset($_POST['roles']);
         unset($_POST['permissions']);
         if ($this->validate($rules)) {
@@ -103,7 +103,7 @@ class UserController extends BaseController
             foreach ($permissions as $permission) {
                 $userPermission->save(['user_id' => $userId, 'permission_id' => $permission]);
             }
-            $info = ['messages' => ['User created successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.insert-success')], 'type' => 'success'];
             return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
@@ -139,8 +139,8 @@ class UserController extends BaseController
         $permission = new Permission();
         $permissions = $permission->findAll();
         if ($data) {
-            $data['roles'] = $user->getUserRoles($id);
-            $data['permissions'] = $user->getUserPermissions($id);
+            $data['roles'] = $user->getUserRolesId($id);
+            $data['permissions'] = $user->getUserPermissionsId($id);
             return view($this->model::VIEW_PATH . '/edit', ['user' => $data, 'roles' => $roles, 'permissions' => $permissions]);
 
         } else {
@@ -156,16 +156,16 @@ class UserController extends BaseController
 
             'name' => [
                 'rules' => 'required|alpha_numeric_space|min_length[3]|max_length[30]',
-                'label' => 'Name',
+                'label' => translate('user.name'),
             ],
             'email' => [
                 'rules' => 'required|valid_email|is_unique[user.email,id,' . $id . ']',
-                'label' => 'Email',
+                'label' => translate('user.email'),
             ],
         ];
 
-        $roles = $_POST['roles'];
-        $permissions = $_POST['permissions'];
+        $roles = $_POST['roles'] ?? [];
+        $permissions = $_POST['permissions'] ?? [];
         unset($_POST['roles']);
         unset($_POST['permissions']);
 
@@ -183,7 +183,7 @@ class UserController extends BaseController
             foreach ($permissions as $permission) {
                 $userPermission->save(['user_id' => $id, 'permission_id' => $permission]);
             }
-            $info = ['messages' => ['User updated successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.update-success')], 'type' => 'success'];
             return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
@@ -199,13 +199,13 @@ class UserController extends BaseController
         $user = new User();
         if ($user->delete($id)) {
             ;
-            $info = ['messages' => ['User deleted successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.delete-success')], 'type' => 'success'];
             return redirect()
                 ->back()
                 ->withInput()
                 ->with('info', $info);
         }
-        $info = ['messages' => ['User not found'], 'type' => 'danger'];
+        $info = ['messages' => [translate('base.not-found')], 'type' => 'danger'];
         return redirect()
             ->back()
             ->withInput()
@@ -224,6 +224,25 @@ class UserController extends BaseController
 
     public function updatePhoto()
     {
+        // var_dump($_FILES);exit;
+        if ($this->request->getFile('image')->isValid()) {
+            $rules = [
+                'image' => 'uploaded[image]|max_size[image,1024]|ext_in[image,jpg,jpeg,png,gif]',
+            ];
+
+            if ($this->validate($rules)) {
+
+                $avatar = $this->request->getFile('iamge');
+                $avatar->move(WRITEPATH . 'uploads');
+                $_POST['iamge'] = $avatar->getClientName();
+
+                $user = new User();
+                $_POST['id'] = session()->get('id');
+                $user->save($_POST);
+
+            }
+        }
+
         return view($this->model::VIEW_PATH . '/profile');
     }
 }

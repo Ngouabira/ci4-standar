@@ -1,56 +1,56 @@
 <?=$this->extend('layouts/main')?>
 
 <?=$this->section('content')?>
-<div class="row">
-    <div class="col-12 mb-4 order-0">
-        <div class="card">
-            <div class="d-flex align-items-end row">
-                <div class="card-header">
-                    <div class="col-12 d-flex justify-content-between">
-                        <h5 class="card-title text-primary"><?=lang('role.edit_role')?></h5>
-                    </div>
-                </div>
-                <div class="card-body table-responsive">
-
-                    <form action="/admin/role/<?=$role['id']?>" method="POST">
-                        <?=csrf_field()?>
-                        <input type="hidden" name="_method" value="PUT">
-                       <?=$this->include('components/message.php')?>
-                        <div class="col-12 pt-1">
-                            <label class="form-label" for="name"><?=lang('role.name')?></label>
-                            <input type="text" required name="name" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>" value="<?=$role['name']?>">
-                        </div>
-                        <div class="col-12 pt-1">
-                            <label class="form-label" for="description"><?=lang('role.description')?></label>
-                            <input type="text" required name="description" id="description" class="form-control <?=session('errors.description') ? 'is-invalid' : ''?>" value="<?=$role['description']?>">
-                        </div>
-                        <div class="col-12 pt-1">
-                            <label for="permissions" class="col-sm-2 col-form-label"><?=lang('user.permissions')?></label>
-                            <div class="col-sm-8">
-                                <select class="form-control select" name="permissions[]" multiple="multiple" data-live-search="true" data-placeholder="<?=lang('user.permissions')?>" style="width: 100%;">
-                                    <?php foreach ($permissions as $value) {?>
-                                        <?php if (array_key_exists($value['id'], $permissions)) {?>
-                                            <option value="<?=$value['id']?>" selected><?=$value['name']?></option>
-                                        <?php } else {?>
-                                            <option value="<?=$value['id']?>"><?=$value['name']?></option>
-                                        <?php }?>
-                                    <?php }?>
-                                </select>
-                                <?php if (session('error.permission')) {?>
-                                    <h6 class="text-danger"><?=session('error.permission')?></h6>
-                                <?php }?>
-                            </div>
-                        </div>
-                        <div class="pt-2">
-                            <button type="submit" id="create" class="btn btn-primary"><?=lang('button.update')?></button>
-                        </div>
-                    </form>
-
-                </div>
+<div class="card">
+    <div class="card-header bg-white">
+        <div class="float-left">
+            <div class="btn-group">
+                <a href="<?=base_url('/admin/role')?>" class="btn btn-sm btn-block btn-primary"><i class="icon-copy fa fa-arrow-left" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
+        <span class="card-title pl-2 text-primary"><?=translate('base.edit')?> <?=translate('role.title')?></span>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+        <form action="/admin/role/<?=$role['id']?>" method="POST">
+            <?=csrf_field()?>
+            <input type="hidden" name="_method" value="PUT">
+            <?=$this->include('components/message.php')?>
+            <div class="col-12 pt-1">
+                <label class="form-label" for="name"><?=lang('role.name')?></label>
+                <input type="text" required name="name" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>" value="<?=$role['name']?>">
+            </div>
+            <div class="col-12 pt-1">
+                <label class="form-label" for="description"><?=lang('role.description')?></label>
+                <input type="text" required name="description" id="description" class="form-control <?=session('errors.description') ? 'is-invalid' : ''?>" value="<?=$role['description']?>">
+            </div>
+            <div class="col-12 pt-1">
+                <label for="permissions" class="form-label"><?=lang('role.permissions')?></label>
+
+                    <select class="select custom-select2 form-control" name="permissions[]" multiple="multiple" data-live-search="true">
+                        <?php foreach ($permissions as $value) {?>
+                            <?php if (in_array($value['id'], $role['permissions'])) {?>
+                                <option value="<?=$value['id']?>" selected><?=$value['name']?></option>
+                            <?php } else {?>
+                                <option value="<?=$value['id']?>"><?=$value['name']?></option>
+                            <?php }?>
+                        <?php }?>
+                    </select>
+                    <?php if (session('error.permission')) {?>
+                        <h6 class="text-danger"><?=session('error.permission')?></h6>
+                    <?php }?>
+
+            </div>
+            <div class="col-12 pt-2">
+                <button type="submit" id="create" class="btn btn-success"><?=lang('base.update')?></button>
+            </div>
+        </form>
+
     </div>
 </div>
+
 <script>
     $('.select').select2();
 </script>

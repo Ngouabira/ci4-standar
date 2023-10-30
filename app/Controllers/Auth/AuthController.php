@@ -114,6 +114,7 @@ class AuthController extends BaseController
             'id' => $user['id'],
             'name' => $user['name'],
             'email' => $user['email'],
+            'lang' => $user['lang'],
             'isLoggedIn' => true,
         ];
 

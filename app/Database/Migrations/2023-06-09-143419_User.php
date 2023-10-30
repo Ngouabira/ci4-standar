@@ -26,6 +26,17 @@ class User extends Migration
             'password' => [
                 'type' => 'TEXT',
             ],
+            'lang' => [
+                'type' => 'VARCHAR',
+                'constraint' => '10',
+                'default' => 'fr',
+            ],
+            'image' => [
+                'type' => 'VARCHAR',
+                'constraint' => '10',
+                'null' => true,
+                'default' => 'default.jpg',
+            ],
             'created_at' => ['type' => 'datetime', 'null' => true, 'default' => null],
             'updated_at' => ['type' => 'datetime', 'null' => true, 'default' => null],
             'deleted_at' => ['type' => 'datetime', 'null' => true, 'default' => null],

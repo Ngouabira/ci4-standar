@@ -1,7 +1,6 @@
 <?=$this->extend('layouts/main')?>
 
 <?=$this->section('content')?>
-<!-- SELECT2 EXAMPLE -->
 <div class="card">
     <div class="card-header bg-white">
         <div class="row">

@@ -41,7 +41,7 @@ class Role extends Model
     {
         return ['isdeleted' => 0, 'name LIKE "%' . $search . '%"
         OR description LIKE "%' . $search . '%"
-         ', ];
+         '];
     }
 
     public function getRolePermissions($roleId)
@@ -58,10 +58,26 @@ class Role extends Model
         return $tabPermission;
     }
 
-    public function deletePermissions($userId)
+    public function getRolePermissionsId($roleId)
     {
+        $permissionModel = new Permission();
         $rolePermissionModel = new RolePermission();
-        $rolePermissionModel->where('role_id', $userId)->delete();
+        $permissions = $rolePermissionModel
+            ->where('role_id', $roleId)
+            ->findAll();
+        $tabPermission = [];
+        foreach ($permissions as $permission) {
+            $tabPermission[] = $permissionModel->find($permission['permission_id'])['id'];
+        }
+        return $tabPermission;
+    }
+
+    public function deletePermissions($roleId)
+    {
+
+        $builder = $this->db->table('role_permission')
+            ->where('role_id', $roleId);
+        $builder->delete();
     }
 
 }

@@ -1,9 +1,8 @@
 <?=$this->extend('layouts/main')?>
 
 <?=$this->section('content')?>
-<!-- SELECT2 EXAMPLE -->
 <div class="card">
-    <div class="card-header">
+    <div class="card-header bg-white">
         <div class="row">
             <div class="col-10 mt-2">
                 <h3 class="card-title"><?=translate('permission.title')?></h3>

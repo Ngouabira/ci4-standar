@@ -29,7 +29,11 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index', ['filter' => 'auth']);
+$routes->get('/', function () {
+    return redirect()->to('/home');
+}, ['filter' => 'auth']);
+
+$routes->get('/home', 'Home::index', ['filter' => 'auth']);
 
 $routes->get('/logout', 'Auth\AuthController::logout', ['filter' => 'auth']);
 $routes->post('/translate', 'LanguageController::index', ['filter' => 'auth']);
@@ -70,10 +74,12 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
 $routes->group('profile', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('', 'Admin\UserController::profile');
-    $routes->put('', 'Admin\UserController::updateProfile');
-    $routes->put('photo', 'Admin\UserController::updatePhoto');
+    $routes->post('', 'Admin\UserController::updateProfile');
+    $routes->post('photo', 'Admin\UserController::updatePhoto');
 
 });
+
+$routes->get('/translate/(:any)', 'LanguageController::index/$1');
 
 /*
  * --------------------------------------------------------------------

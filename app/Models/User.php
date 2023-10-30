@@ -41,7 +41,7 @@ class User extends Model
     {
         return ['isdeleted' => 0, 'name LIKE "%' . $search . '%"
         OR description LIKE "%' . $search . '%" OR email LIKE "%' . $search . '%"
-         ', ];
+         '];
     }
 
     public function hashPassword(array $data)
@@ -65,6 +65,21 @@ class User extends Model
         return $tabRole;
     }
 
+    public function getUserRolesId($userId)
+    {
+        $roleModel = new Role();
+        $userRoleModel = new UserRole();
+        $roles = $userRoleModel
+            ->where('user_id', $userId)
+            ->findAll();
+        $tabRole = [];
+        foreach ($roles as $role) {
+            $tabRole[] = $roleModel->find($role['role_id'])['id'];
+        }
+
+        return $tabRole;
+    }
+
     public function getUserPermissions($userId)
     {
         $permissionModel = new Permission();
@@ -80,16 +95,33 @@ class User extends Model
         return $tabPermission;
     }
 
+    public function getUserPermissionsId($userId)
+    {
+        $permissionModel = new Permission();
+        $userPermissionModel = new UserPermission();
+        $permissions = $userPermissionModel
+            ->where('user_id', $userId)
+            ->findAll();
+        $tabPermission = [];
+        foreach ($permissions as $permission) {
+            $tabPermission[] = $permissionModel->find($permission['permission_id'])['id'];
+        }
+
+        return $tabPermission;
+    }
+
     public function deletePermissions($userId)
     {
-        $userPermissionModel = new UserPermission();
-        $userPermissionModel->where('user_id', $userId)->delete();
+        $builder = $this->db->table('user_permission')
+            ->where('user_id', $userId);
+        $builder->delete();
     }
 
     public function deleteRoles($userId)
     {
-        $roleModel = new UserRole();
-        $roleModel->where('user_id', $userId)->delete();
+        $builder = $this->db->table('user_role')
+            ->where('user_id', $userId);
+        $builder->delete();
     }
 
 }

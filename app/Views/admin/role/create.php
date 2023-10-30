@@ -1,16 +1,18 @@
 <?=$this->extend('layouts/main')?>
 
 <?=$this->section('content')?>
-<div class="row">
-    <div class="col-12 mb-4 order-0">
-        <div class="card">
-            <div class="d-flex align-items-end row">
-                <div class="card-header">
-                    <div class="col-12 d-flex justify-content-between">
-                        <h5 class="card-title text-primary"><?=lang('role.new_role')?></h5>
-                    </div>
-                </div>
-                <div class="card-body table-responsive">
+<div class="card">
+    <div class="card-header bg-white">
+        <div class="float-left">
+            <div class="btn-group">
+                <a href="<?=base_url('/admin/role')?>" class="btn btn-sm btn-block btn-primary"><i class="icon-copy fa fa-arrow-left" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <span class="card-title pl-2 text-primary"><?=translate('base.new')?> <?=translate('role.title')?></span>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
                     <form action="/admin/role" method="POST">
                         <?=csrf_field()?>
                        <?=$this->include('components/message.php')?>
@@ -23,9 +25,9 @@
                             <input type="text" value="<?=old('description')?>" required name="description" id="description" class="form-control <?=session('errors.description') ? 'is-invalid' : ''?>">
                         </div>
                         <div class="col-12 pt-1">
-                            <label for="permissions" class="col-sm-2 col-form-label"><?=lang('user.permissions')?></label>
-                            <div class="col-sm-8">
-                                <select class="form-control select" name="permissions[]" multiple="multiple" data-live-search="true" data-placeholder="<?=lang('user.permissions')?>" style="width: 100%;">
+                            <label for="permissions" class="form-label"><?=lang('user.permissions')?></label>
+
+                                <select class="custom-select2 form-control select2-hidden-accessible" name="permissions[]" multiple="multiple" data-live-search="true" data-placeholder="<?=lang('user.permissions')?>" style="width: 100%;">
                                     <?php foreach ($permissions as $permission) {?>
                                         <option <?=in_array($permission['id'], old('permissions', [])) ? 'selected' : ''?> value="<?=$permission['id']?>"><?=$permission['name']?></option>
                                     <?php }?>
@@ -33,18 +35,15 @@
                                 <?php if (session('error.permission')) {?>
                                     <h6 class="text-danger"><?=session('error.permission')?></h6>
                                 <?php }?>
-                            </div>
+
                         </div>
-                        <div class="pt-2">
-                            <button type="submit" id="create" class="btn btn-primary"><?=lang('base.create')?></button>
+                        <div class="col-12 pt-2">
+                            <button type="submit" id="create" class="btn btn-success"><?=lang('base.create')?></button>
                         </div>
                     </form>
 
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 <script>
     $('.select').select2();
 </script>

@@ -72,17 +72,17 @@ class RoleController extends BaseController
 
             'name' => [
                 'rules' => 'required|min_length[3]|max_length[30]|is_unique[role.name]',
-                'label' => 'Name',
+                'label' => translate('role.name'),
             ],
 
             'description' => [
                 'rules' => 'required|min_length[3]|max_length[500]',
-                'label' => 'Description',
+                'label' => translate('role.description'),
             ],
 
         ];
 
-        $permissions = $_POST['permissions'];
+        $permissions = $_POST['permissions'] ?? [];
         unset($_POST['permissions']);
 
         if ($this->validate($rules)) {
@@ -92,7 +92,7 @@ class RoleController extends BaseController
             foreach ($permissions as $permission) {
                 $rolePermission->save(['role_id' => $roleId, 'permission_id' => $permission]);
             }
-            $info = ['messages' => ['Role created successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.insert-success')], 'type' => 'success'];
             return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
@@ -123,7 +123,7 @@ class RoleController extends BaseController
         $permission = new Permission();
         $permissions = $permission->findAll();
         if ($data) {
-            $data['permissions'] = $role->getRolePermissions($id);
+            $data['permissions'] = $role->getRolePermissionsId($id);
             return view($this->model::VIEW_PATH . '/edit', ['role' => $data, 'permissions' => $permissions]);
         } else {
             return redirect()
@@ -139,17 +139,17 @@ class RoleController extends BaseController
 
             'name' => [
                 'rules' => 'required|min_length[3]|max_length[30]|is_unique[role.name,id,' . $id . ']',
-                'label' => 'Name',
+                'label' => translate('role.name'),
             ],
 
             'description' => [
                 'rules' => 'required|min_length[3]|max_length[500]',
-                'label' => 'Description',
+                'label' => translate('role.description'),
             ],
 
         ];
 
-        $permissions = $_POST['permissions'];
+        $permissions = $_POST['permissions'] ?? [];
         unset($_POST['permissions']);
 
         if ($this->validate($rules)) {
@@ -161,7 +161,7 @@ class RoleController extends BaseController
             foreach ($permissions as $permission) {
                 $rolePermission->save(['role_id' => $id, 'permission_id' => $permission]);
             }
-            $info = ['messages' => ['Role updated successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.update-success')], 'type' => 'success'];
             return redirect()->to($this->model::REDIRECTION_URL)->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
@@ -176,14 +176,14 @@ class RoleController extends BaseController
     {
         $role = new Role();
         if ($role->delete($id)) {
-            $info = ['messages' => ['Role deleted successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('base.delete-success')], 'type' => 'success'];
             return redirect()
                 ->back()
                 ->withInput()
                 ->with('info', $info);
         }
 
-        $info = ['messages' => ['Role not found'], 'type' => 'danger'];
+        $info = ['messages' => [translate('base.not-found')], 'type' => 'danger'];
         return redirect()
             ->back()
             ->withInput()

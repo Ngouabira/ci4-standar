@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Helpers;
-
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RolePermission;

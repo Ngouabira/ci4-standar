@@ -1,3 +1,7 @@
 <?php
 
-return [];
+return [
+    'title' => 'Permission',
+    'name' => 'Name',
+    'description' => 'Description',
+];

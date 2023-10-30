@@ -5,11 +5,13 @@
 <?=$this->include('Components/modal.php')?>
 <div class="card">
     <div class="card-header bg-white">
-        <div class="row">
-            <div class="col-10 mt-2">
-                <h5 class="card-title text-primary"><?=lang('user.new_user')?></h5>
+        <div class="float-left">
+            <div class="btn-group">
+                <a href="<?=base_url('/admin/user')?>" class="btn btn-sm btn-block btn-primary"><i class="icon-copy fa fa-arrow-left" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
+        <span class="card-title pl-2 text-primary"><?=translate('base.new')?> <?=translate('user.title')?></span>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -17,16 +19,16 @@
             <?=csrf_field()?>
             <?=$this->include('components/message.php')?>
             <div class="col-12 pt-1">
-                <label class="form-label" for="name"><?=lang('user.name')?></label>
+                <label class="form-label" for="name"><?=translate('user.name')?></label>
                 <input type="text" name="name" value="<?=old('name')?>" id="name" class="form-control <?=session('errors.name') ? 'is-invalid' : ''?>">
             </div>
             <div class="col-12 pt-1">
-                <label class="form-label" for="email"><?=lang('user.email')?></label>
+                <label class="form-label" for="email"><?=translate('user.email')?></label>
                 <input type="email" name="email" value="<?=old('email')?>" id="email" class="form-control <?=session('errors.email') ? 'is-invalid' : ''?>">
             </div>
             <div class="col-12 pt-1">
-                <label for="roles" class="col-form-label"><?=lang('user.roles')?></label>
-                <select class="custom-select2 form-control select2-hidden-accessible" name="roles[]" multiple="multiple" data-placeholder="<?=lang('user.roles')?>" style="width: 100%;">
+                <label for="roles" class="col-form-label"><?=translate('user.roles')?></label>
+                <select class="custom-select2 form-control select2-hidden-accessible" name="roles[]" multiple="multiple" data-placeholder="<?=translate('user.roles')?>" style="width: 100%;">
                     <?php foreach ($roles as $role) {?>
                         <option <?=in_array($role['id'], old('roles', [])) ? 'selected' : ''?> value="<?=$role['id']?>"><?=$role['name']?></option>
                     <?php }?>
@@ -36,8 +38,8 @@
                 <?php }?>
             </div>
             <div class="col-12 pt-1">
-                <label for="permissions" class="col-form-label"><?=lang('user.permissions')?></label>
-                <select class="custom-select2 form-control select2-hidden-accessible" name="permissions[]" multiple="multiple" data-live-search="true" data-placeholder="<?=lang('user.permissions')?>" style="width: 100%;">
+                <label for="permissions" class="col-form-label"><?=translate('user.permissions')?></label>
+                <select class="custom-select2 form-control select2-hidden-accessible" name="permissions[]" multiple="multiple" data-live-search="true" data-placeholder="<?=translate('user.permissions')?>" style="width: 100%;">
                     <?php foreach ($permissions as $permission) {?>
                         <option <?=in_array($permission['id'], old('permissions', [])) ? 'selected' : ''?> value="<?=$permission['id']?>"><?=$permission['name']?></option>
                     <?php }?>
@@ -48,11 +50,11 @@
             </div>
 
             <div class="col-12 pt-1">
-                <label class="form-label" for="password"><?=lang('user.password')?></label>
+                <label class="form-label" for="password"><?=translate('user.password')?></label>
                 <input type="password" name="password" id="password" class="form-control <?=session('errors.password') ? 'is-invalid' : ''?>">
             </div>
             <div class="pt-2 col-12">
-                <button type="submit" id="create" class="btn btn-primary"><?=lang('base.create')?></button>
+                <button type="submit" id="create" class="btn btn-success"><?=translate('base.create')?></button>
             </div>
         </form>
     </div>

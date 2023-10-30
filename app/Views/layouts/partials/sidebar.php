@@ -13,14 +13,14 @@
 			<div id="mCSB_3_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr">
 				<div class="sidebar-menu icon-style-1 icon-list-style-1">
 					<ul id="accordion-menu">
-						<li class="dropdown show">
+						<li class="dropdown <?=service('request')->uri->getSegment(1) == 'admin' ? 'show' : ''?>">
 							<a href="javascript:;" class="dropdown-toggle" data-option="on">
-								<span class="micon dw dw-user-1"></span><span class="mtext">Admin</span>
+								<span class="micon dw dw-user-1"></span><span class="mtext"><?=translate('base.admin')?></span>
 							</a>
-							<ul class="submenu" style="display: block;">
-								<li><a href="/admin/user" class="active">User</a></li>
-								<li><a href="/admin/role">Role</a></li>
-								<li><a href="/admin/permission">Permission</a></li>
+							<ul class="submenu" style="display: <?=service('request')->uri->getSegment(1) == 'admin' ? 'block' : 'none'?>;">
+								<li><a href="/admin/user" class="<?=service('request')->uri->getSegment(2) == 'user' ? 'active' : ''?>"><?=translate('base.user')?></a></li>
+								<li><a href="/admin/role" class="<?=service('request')->uri->getSegment(2) == 'role' ? 'active' : ''?>"><?=translate('base.role')?></a></li>
+								<li><a href="/admin/permission" class="<?=service('request')->uri->getSegment(2) == 'permission' ? 'active' : ''?>"><?=translate('base.permission')?></a></li>
 							</ul>
 						</li>
 
