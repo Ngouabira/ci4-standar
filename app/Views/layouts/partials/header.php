@@ -3,13 +3,13 @@
 	</div>
 
 	<div class="header-right">
-		<div class="user-info-dropdown mt-20">
+		<div class="user-info-dropdown">
 			<div class="dropdown">
-				<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+				<a class="dropdown-toggle mt-20" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
 
 				<!-- <i style=" font-size:24pt;" class="icon-copy fi-web"></i> -->
 
-					<span class="user-name"><?=session()->get("country") ?? translate('base.french')?></span>
+					<span class=""><?=session()->get("country") ?? translate('base.french')?></span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 					<a class="dropdown-item" href="/translate/fr"><?=translate('base.french')?></a>
