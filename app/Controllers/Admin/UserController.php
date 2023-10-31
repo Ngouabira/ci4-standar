@@ -224,25 +224,41 @@ class UserController extends BaseController
 
     public function updatePhoto()
     {
-        // var_dump($_FILES);exit;
         if ($this->request->getFile('image')->isValid()) {
             $rules = [
-                'image' => 'uploaded[image]|max_size[image,1024]|ext_in[image,jpg,jpeg,png,gif]',
+                'image' => 'uploaded[image]|max_size[image,1024]|is_image[image]',
             ];
 
             if ($this->validate($rules)) {
 
-                $avatar = $this->request->getFile('iamge');
-                $avatar->move(WRITEPATH . 'uploads');
-                $_POST['iamge'] = $avatar->getClientName();
+                $avatar = $this->request->getFile('image');
+                $avatar->move(ROOTPATH . 'public/uploads');
 
-                $user = new User();
-                $_POST['id'] = session()->get('id');
-                $user->save($_POST);
+                $_POST['image'] = $avatar->getClientName();
+                $userId = session()->get('id');
+                $this->model->update($userId, $_POST);
 
+                session()->set('image', user()['image']);
+
+            } else {
+                $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('info', $info);
             }
+        } else {
+            $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('info', $info);
         }
 
-        return view($this->model::VIEW_PATH . '/profile');
+        $info = ['messages' => [translate('file-success')], 'type' => 'danger'];
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('info', $info);
     }
 }

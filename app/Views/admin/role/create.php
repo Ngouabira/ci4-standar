@@ -9,7 +9,7 @@
                 </a>
             </div>
         </div>
-        <span class="card-title pl-2 text-primary"><?=translate('base.new')?> <?=translate('role.title')?></span>
+        <span class="card-title pl-2"><?=translate('base.new')?> <?=translate('role.title')?></span>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

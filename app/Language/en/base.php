@@ -30,6 +30,7 @@ return [
     "french" => "French",
     "english" => "English",
     "total" => "Total",
+    'file-success' => 'File uploaded successfully',
     'insert-success' => 'Record inserted successfully',
     'update-success' => 'Record updated successfully',
     'delete-success' => 'Record deleted successfully',

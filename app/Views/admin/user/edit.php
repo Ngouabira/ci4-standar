@@ -9,7 +9,7 @@
                 </a>
             </div>
         </div>
-        <span class="card-title pl-2 text-primary"><?=translate('base.edit')?> <?=translate('user.title')?></span>
+        <span class="card-title pl-2"><?=translate('base.edit')?> <?=translate('user.title')?></span>
     </div>
     <div class="card-body table-responsive">
 

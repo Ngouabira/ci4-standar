@@ -14,7 +14,7 @@ class User extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['name', 'email', 'password'];
+    protected $allowedFields = ['name', 'email', 'password', 'image'];
 
     // Dates
     protected $useTimestamps = true;
@@ -48,6 +48,11 @@ class User extends Model
     {
         $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
         return $data;
+    }
+
+    public function getUserByEmail($email)
+    {
+        return $this->where(['email' => $email])->first();
     }
 
     public function getUserRoles($userId)
