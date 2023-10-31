@@ -13,7 +13,7 @@
                 <label for="upload" class="btn btn-primary me-2 mb-4 ml-2" tabindex="0">
                         <span class="d-none d-sm-block"><?=translate('base.upload_file')?></span>
                         <i class="bx bx-upload d-block d-sm-none"></i>
-                        <input type="file" id="upload" class="account-file-input" hidden name="image"  accept="image/png, image/jpeg">
+                        <input type="file" require id="upload" class="account-file-input" hidden name="image"  accept="image/png, image/jpeg">
                     </label>
                     <button type="submit" class="btn btn-outline-success account-image-reset mb-4">
                         <span class="d-none d-sm-block"><?=translate('base.save')?></span>
