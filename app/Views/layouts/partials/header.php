@@ -1,4 +1,5 @@
 <div class="header">
+<div class="menu-icon dw dw-menu"></div>
 	<div class="header-left">
 	</div>
 

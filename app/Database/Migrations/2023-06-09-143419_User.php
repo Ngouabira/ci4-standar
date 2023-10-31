@@ -33,7 +33,7 @@ class User extends Migration
             ],
             'image' => [
                 'type' => 'VARCHAR',
-                'constraint' => '10',
+                'constraint' => '50',
                 'null' => true,
                 'default' => 'default.jpg',
             ],
