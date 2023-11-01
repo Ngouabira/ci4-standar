@@ -50,7 +50,8 @@
     showTable({
         dataGrid: 'userTable',
         columnNames: columns,
-        url: '/admin/user'
+        url: '/admin/user',
+        actionButtons:defaultActionButtons2
     })
 </script>
 <?=$this->endSection()?>
