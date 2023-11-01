@@ -1,6 +1,6 @@
 <script>
 
-    let defaultActionButtons = function(data) {
+    let defaultActionButtons2 = function(data) {
         let url = window.location.href;
         return `
         <a class="btn btn-outline-info btn-sm" href="${url}/${data.id}/show"><i class="icon-copy fi-eye"></i></a>
@@ -9,11 +9,11 @@
     `;
     };
 
-    let defaultActionButtons2 = function(data) {
+    let defaultActionButtons = function(data) {
         let url = window.location.href;
         return `
-        <a class="btn btn-info btn-sm" href="${url}/${data.id}/show"><i class="icon-copy fi-eye"></i></a>
-        <a class="btn btn-primary btn-sm" href="${url}/${data.id}/edit"><i class="icon-copy fi-pencil"></i></a>
+        <a class="btn btn-outline-primary btn-sm" href="${url}/${data.id}/edit"><i class="icon-copy fi-pencil"></i></a>
+        <button class="btn btn-outline-danger btn-sm" onclick="showDeleteModal(${data.id})"><i class="icon-copy fi-trash"></i></button>
     `;
     };
 
@@ -75,7 +75,6 @@
                 visible: true,
                 highlightSearchText: false,
                 searchMode: "contains",
-                width: "350px"
             },
             groupPanel: {
                 visible: true

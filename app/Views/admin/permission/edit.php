@@ -9,7 +9,7 @@
                 </a>
             </div>
         </div>
-        <span class="card-title pl-2"><?=translate('base.new')?> <?=translate('permission.title')?></span>
+        <span class="card-title pl-2"><?=translate('base.edit')?> <?=translate('permission.title')?></span>
     </div>
     <div class="card-body table-responsive">
 

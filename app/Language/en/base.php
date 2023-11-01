@@ -49,4 +49,7 @@ return [
     "upload_file" => "Upload new photo",
     "image_size" => "Allowed JPG, GIF or PNG. Max size of 1Mo",
     "not-found" => "Record not found",
+
+    'email_exists' => 'Email already exists',
+    'profile-updated' => 'Profile updated',
 ];

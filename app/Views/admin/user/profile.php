@@ -2,7 +2,7 @@
 
 <?=$this->section('content')?>
 <div class="card">
-    <h5 class="card-header bg-white"><?=translate('base.profile')?></h5>
+    <h5 class="card-header bg-white"><?=translate('base.profile')?></h5><br>
     <!-- Account -->
     <div class="card-body">
         <div class="d-flex align-items-start align-items-sm-center gap-4">
@@ -28,6 +28,7 @@
     </div>
 
     <div class="card-body">
+    <div class="col-10 offset-1"> <?=$this->include('components/message.php')?></div>
         <form id="formAccountSettings" method="POST" action="/profile">
         <?=csrf_field()?>
             <div class="row">

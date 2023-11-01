@@ -17,7 +17,6 @@ class UserController extends BaseController
     public function __construct()
     {
         $this->model = new User();
-
     }
 
     public function index()
@@ -60,7 +59,7 @@ class UserController extends BaseController
         return view($this->model::VIEW_PATH . '/index');
     }
 
-    public function new ()
+    public function new()
     {
         $role = new Role();
         $roles = $role->findAll();
@@ -112,7 +111,6 @@ class UserController extends BaseController
                 ->withInput()
                 ->with('info', $info);
         }
-
     }
 
     public function show($id)
@@ -123,7 +121,6 @@ class UserController extends BaseController
             $data['roles'] = $user->getUserRoles($id);
             $data['permissions'] = $user->getUserPermissions($id);
             return view($this->model::VIEW_PATH . '/show', ['user' => $data]);
-
         } else {
             return redirect()
                 ->back();
@@ -142,7 +139,6 @@ class UserController extends BaseController
             $data['roles'] = $user->getUserRolesId($id);
             $data['permissions'] = $user->getUserPermissionsId($id);
             return view($this->model::VIEW_PATH . '/edit', ['user' => $data, 'roles' => $roles, 'permissions' => $permissions]);
-
         } else {
             return redirect()
                 ->back();
@@ -197,8 +193,7 @@ class UserController extends BaseController
     public function delete($id)
     {
         $user = new User();
-        if ($user->delete($id)) {
-            ;
+        if ($user->delete($id)) {;
             $info = ['messages' => [translate('base.delete-success')], 'type' => 'success'];
             return redirect()
                 ->back()
@@ -219,7 +214,27 @@ class UserController extends BaseController
 
     public function updateProfile()
     {
-        return view($this->model::VIEW_PATH . '/profile');
+
+        $userByEmail = $this->model->getUserByEmail($_POST['email']);
+        if ($userByEmail != null) {
+
+            if ($userByEmail['email'] == authUser()['email']) {
+                $this->model->update(authUser()['id'], $_POST);
+                session()->set('name', $_POST['name']);
+                session()->set('email', $_POST['email']);
+                $info = ['messages' => [translate('base.profile-updated')], 'type' => 'success'];
+                return redirect()->to('/profile')->withInput()->with('info', $info);
+            } else {
+                $info = ['messages' => [translate('base.email_exists')], 'type' => 'danger'];
+                return redirect()->to('/profile')->withInput()->with('info', $info);
+            }
+        } else {
+            $this->model->update(authUser()['id'], $_POST);
+            session()->set('name', $_POST['name']);
+            session()->set('email', $_POST['email']);
+            $info = ['messages' => [translate('base.profile-updated')], 'type' => 'success'];
+            return redirect()->to('/profile')->withInput()->with('info', $info);
+        }
     }
 
     public function updatePhoto()
@@ -239,7 +254,6 @@ class UserController extends BaseController
                 $this->model->update($userId, $_POST);
 
                 session()->set('image', user()['image']);
-
             } else {
                 $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
                 return redirect()

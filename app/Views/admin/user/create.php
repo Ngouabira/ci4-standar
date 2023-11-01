@@ -11,7 +11,7 @@
                 </a>
             </div>
         </div>
-        <span class="card-title pl-2"><?=translate('base.new')?> <?=translate('user.title')?></span>
+        <span class="card-title pl-2"><?=translate('user.new')?></span>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

@@ -3,21 +3,20 @@
 		<div class="menu-icon dw dw-menu"></div>
 	</div>
 
-	<div class="header-right">
-		<div class="user-info-dropdown">
+	<div class="user-notification">
 			<div class="dropdown">
-				<a class="dropdown-toggle mt-20" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+				<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
 
-				<!-- <i style=" font-size:24pt;" class="icon-copy fi-web"></i> -->
+				<i style="font-size: 24px;  vertical-align: text-bottom;" class="icon-copy fi-web dw-notification"></i>
 
-					<span class=""><?=session()->get("country") ?? translate('base.french')?></span>
+					<span class=""><?=translate('base.' . session()->get("country")) ?? translate('base.french')?></span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 					<a class="dropdown-item" href="/translate/fr"><?=translate('base.french')?></a>
 					<a class="dropdown-item" href="/translate/en"><?=translate('base.english')?></a>
 				</div>
 			</div>
-		</div>
+	</div>
 
 		<div class="user-info-dropdown">
 			<div class="dropdown">
