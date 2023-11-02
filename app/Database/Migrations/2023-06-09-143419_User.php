@@ -33,7 +33,7 @@ class User extends Migration
             ],
             'image' => [
                 'type' => 'VARCHAR',
-                'constraint' => '50',
+                'constraint' => '255',
                 'null' => true,
                 'default' => 'default.jpg',
             ],
@@ -44,6 +44,7 @@ class User extends Migration
             'updated_by' => ['type' => 'int', 'null' => true, 'default' => null],
             'deleted_by' => ['type' => 'int', 'null' => true, 'default' => null],
             'isdeleted' => ['type' => 'int', 'null' => true, 'default' => 0],
+            'status' => ['type' => 'int', 'null' => true, 'default' => 1],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey('email');

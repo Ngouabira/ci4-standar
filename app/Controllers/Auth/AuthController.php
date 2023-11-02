@@ -33,7 +33,7 @@ class AuthController extends BaseController
             $user = new User();
             $_POST["password"] = password_hash($_POST["password"], PASSWORD_BCRYPT);
             $user->save($_POST);
-            $info = ['messages' => ['Account created successfully'], 'type' => 'success'];
+            $info = ['messages' => [translate('auth.registerSuccess')], 'type' => 'success'];
             return redirect()->to('/login')->withInput()->with('info', $info);
         } else {
             $info = ['messages' => $this->validator->getErrors(), 'type' => 'danger'];
@@ -72,10 +72,16 @@ class AuthController extends BaseController
             $user = $model->where('email', $_POST['email'])
                 ->first();
             if ($user && password_verify($_POST['password'], $user['password'])) {
-                $this->setSession($user);
-                return redirect()->to('/');
+                if ($user['status'] == 1) {
+                    $this->setSession($user);
+                    return redirect()->to('/');
+                } else {
+                    $info = ['messages' => [translate('auth.accountDisabled')], 'type' => 'danger'];
+                    return redirect()->back()->withInput()->with('info', $info);
+                }
+
             } else {
-                $info = ['messages' => ["Email or password don't match"], 'type' => 'danger'];
+                $info = ['messages' => [translate('auth.badAttempt')], 'type' => 'danger'];
                 return redirect()->back()->withInput()->with('info', $info);
             }
 

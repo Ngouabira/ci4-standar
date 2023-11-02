@@ -2,7 +2,7 @@
 
 <?=$this->section('content')?>
 <div class="card">
-<div class="card-header bg-white">
+    <div class="card-header bg-white">
         <div class="float-left">
             <div class="btn-group">
                 <a href="<?=base_url('/admin/user')?>" class="btn btn-sm btn-block btn-primary"><i class="icon-copy fa fa-arrow-left" aria-hidden="true"></i>
@@ -10,6 +10,25 @@
             </div>
         </div>
         <span class="card-title pl-2"><?=translate('user.title')?> <?=$user['id']?> <?=translate('base.detail')?></span>
+        <div class="float-right">
+            <div class="btn-group">
+
+                <?php if ($user['status'] == 1): ?>
+                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#accountStatusModal">
+                        <?=translate('user.disableAccount')?>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success ml-1" data-toggle="modal" data-target="#resetPasswordModal">
+                        <?=translate('user.resetPassword')?>
+                    </button>
+                <?php else: ?>
+                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#accountStatusModal">
+                        <?=translate('user.enableAccount')?>
+                    </button>
+                <?php endif?>
+
+
+            </div>
+        </div>
     </div>
     <!-- Account -->
     <div class="card-body">
@@ -76,4 +95,53 @@
     </div>
     <!-- /Account -->
 </div>
+
+<div class="modal fade" id="accountStatusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content" id="disable-frm" method="POST" action="/admin/user/change-status">
+            <?=csrf_field()?>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><?=$user['status'] == 1 ? translate('user.disableAccount') : translate('user.enableAccount')?></h4>
+                <button type="button" style="background: none; border: none; font-size: 2.3em; color:red;" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="_method" value="POST">
+                <input type="hidden" name="id" value="<?=$user['id']?>">
+                <input type="hidden" name="status" value="<?=$user['status'] == 1 ? 0 : 1?>">
+                <div class="form-group col-md-12">
+                    <h6> <?=$user['status'] == 1 ? translate('user.disable_message') : translate('user.enable_message')?></h6>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><?=translate('base.no')?></button>
+                <button class="btn btn-outline-success" type="submit" ><?=translate('base.yes')?></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content" id="reset-frm" method="POST" action="/admin/user/reset-password">
+            <?=csrf_field()?>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><?=translate('user.resetPassword')?></h4>
+                <button type="button" style="background: none; border: none; font-size: 2.3em; color:red;" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="_method" value="POST">
+                <input type="hidden" name="id" id="idValue" value="<?=$user['id']?>">
+                <div class="form-group col-md-12">
+                    <h6> <?=translate('user.reset_message')?></h6>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><?=translate('base.no')?></button>
+                <button class="btn btn-outline-success" type="submit" ><?=translate('base.yes')?></button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <?=$this->endSection()?>

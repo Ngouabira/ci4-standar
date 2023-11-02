@@ -101,4 +101,5 @@ return [
     'lang' => 'Language',
     'remember' => 'Remember',
     'or' => 'OR',
+    'accountDisabled' => 'Your account has been disabled.',
 ];

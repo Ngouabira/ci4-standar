@@ -38,6 +38,22 @@
             caption: `<?=translate('user.email')?>`,
             visible: true
         },
+        {
+            dataField: 'status',
+            caption: `<?=translate('user.status')?>`,
+            visible: true,
+            alignment: 'center',
+            cellTemplate: function(container, options) {
+                if (options.value==1) {
+                    const status = '<?=translate('user.active')?>';
+                    $('<span class="badge  badge-success">').text(status).appendTo(container);
+                }
+                else{
+                    const status = '<?=translate('user.inactive')?>';
+                    $('<span class="badge  badge-danger">').text(status).appendTo(container);
+                }
+            }
+        },
 
         //   { dataField: 'deleted_by', caption: `<?=translate('user.deleted_by')?>`, visible: false },
         //   { dataField: 'created_by', caption: `<?=translate('user.created_by')?>`, visible: false },

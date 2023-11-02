@@ -59,7 +59,7 @@ class UserController extends BaseController
         return view($this->model::VIEW_PATH . '/index');
     }
 
-    public function new()
+    public function new ()
     {
         $role = new Role();
         $roles = $role->findAll();
@@ -93,6 +93,7 @@ class UserController extends BaseController
         unset($_POST['permissions']);
         if ($this->validate($rules)) {
             $user = new User();
+            $_POST['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
             $userId = $user->insert($_POST);
             $userPermission = new UserPermission();
             $userRole = new UserRole();
@@ -269,7 +270,68 @@ class UserController extends BaseController
                 ->with('info', $info);
         }
 
-        $info = ['messages' => [translate('file-success')], 'type' => 'danger'];
+        $info = ['messages' => [translate('base.file-success')], 'type' => 'success'];
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('info', $info);
+    }
+
+    public function changeStatus()
+    {
+        $data = $this->model->find($_POST['id']);
+        if ($data) {
+            $this->model->save($_POST);
+            $info = ['messages' => [translate('user.status-success')], 'type' => 'success'];
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('info', $info);
+        }
+        $info = ['messages' => [translate('base.not-found')], 'type' => 'danger'];
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('info', $info);
+    }
+
+    public function changePassword()
+    {
+        $user = $this->model->find(authUser()['id']);
+        if (password_verify($_POST['oldPassword'], $user['password'])) {
+
+            unset($_POST['oldPassword']);
+            $_POST['password'] = password_hash($_POST['newPassword'], PASSWORD_BCRYPT);
+            $_POST['id'] = authUser()['id'];
+            unset($_POST['newPassword']);
+            $this->model->save($_POST);
+            $info = ['messages' => [translate('user.password-chanage-success')], 'type' => 'success'];
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('info', $info);
+        }
+
+        $info = ['messages' => [translate('user.oldPassword-error')], 'type' => 'danger'];
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('info', $info);
+    }
+
+    public function resetPassword()
+    {
+        $user = $this->model->find($_POST['id']);
+        $_POST['password'] = password_hash('1234', PASSWORD_BCRYPT);
+        if ($user) {
+            $this->model->save($_POST);
+            $info = ['messages' => [translate('user.password-success')], 'type' => 'success'];
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('info', $info);
+        }
+        $info = ['messages' => [translate('base.not-found')], 'type' => 'danger'];
         return redirect()
             ->back()
             ->withInput()

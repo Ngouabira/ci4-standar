@@ -14,7 +14,7 @@ class User extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['name', 'email', 'password', 'image'];
+    protected $allowedFields = ['name', 'email', 'password', 'image', 'status'];
 
     // Dates
     protected $useTimestamps = true;
@@ -41,7 +41,7 @@ class User extends Model
     {
         return ['isdeleted' => 0, 'name LIKE "%' . $search . '%"
         OR description LIKE "%' . $search . '%" OR email LIKE "%' . $search . '%"
-         '];
+         ', ];
     }
 
     public function hashPassword(array $data)

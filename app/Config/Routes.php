@@ -69,6 +69,9 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
         "controller" => "PermissionController",
     ]);
 
+    $routes->post('user/change-status', 'UserController::changeStatus');
+    $routes->post('user/reset-password', 'UserController::resetPassword');
+
 });
 
 $routes->group('profile', ['filter' => 'auth'], function ($routes) {
@@ -76,6 +79,7 @@ $routes->group('profile', ['filter' => 'auth'], function ($routes) {
     $routes->get('', 'Admin\UserController::profile');
     $routes->post('', 'Admin\UserController::updateProfile');
     $routes->post('photo', 'Admin\UserController::updatePhoto');
+    $routes->post('password', 'Admin\UserController::changePassword');
 
 });
 

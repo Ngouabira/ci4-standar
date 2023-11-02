@@ -107,4 +107,5 @@ return [
     'lang' => 'Langue',
     'remember' => 'Se souvenir de moi',
     'or' => 'OU',
+    'accountDisabled' => 'Votre compte a été désactivé.',
 ];
